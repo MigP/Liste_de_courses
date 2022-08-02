@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splashScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="30dp"
@@ -11,15 +12,12 @@
         android:id="@+id/splashImg"
         android:layout_width="291dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="127dp"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toTopOf="@+id/splashBtn"
+        app:layout_constraintBottom_toTopOf="@+id/showListsBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_splashTitle"
-        app:layout_constraintVertical_bias="0.452"
         app:srcCompat="@drawable/shopper" />
 
     <TextView
@@ -27,30 +25,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="67dp"
-        android:layout_marginBottom="58dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="#FF0000"
+        android:textColor="@color/title"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/splashImg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/splashImg"
+        app:layout_constraintStart_toStartOf="@+id/splashImg"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/splashBtn"
-        android:layout_width="wrap_content"
+        android:id="@+id/showListsBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="121dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="94dp"
         android:text="@string/my_lists"
         app:cornerRadius="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/createListBtn"
+        app:layout_constraintEnd_toEndOf="@+id/createListBtn"
+        app:layout_constraintStart_toStartOf="@+id/createListBtn"
+        app:layout_constraintTop_toBottomOf="@+id/splashImg" />
+
+    <Button
+        android:id="@+id/createListBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="41dp"
+        android:text="@string/create_list"
+        app:cornerRadius="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/splashImg"
-        app:layout_constraintTop_toBottomOf="@+id/splashImg" />
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/showListsBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

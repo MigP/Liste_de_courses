@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Liste de courses</string>
-    <string name="my_lists">Mes listes</string>
+    <string name="my_lists">Afficher mes listes</string>
+    <string name="create_list">Créer une liste</string>
 </resources>

@@ -55,12 +55,15 @@ class SplashActivity : AppCompatActivity() {
             val myFadeInAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein15)
             myImageView.startAnimation(myFadeInAnimation)
 
-        // Splash button fade in
-            val splashBtn: Button = findViewById<View>(R.id.splashBtn) as Button
-            val buttonFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
-            splashBtn.startAnimation(buttonFadeIn)
+        // Show lists button fade in
+            val showListsBtn: Button = findViewById<View>(R.id.showListsBtn) as Button
+            val showListsBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
+            showListsBtn.startAnimation(showListsBtnFadeIn)
 
-
+        // Create list button fade in
+        val createListBtn: Button = findViewById<View>(R.id.createListBtn) as Button
+        val createListBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
+        createListBtn.startAnimation(createListBtnFadeIn)
 
     }
 

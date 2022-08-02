@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Shopping list</string>
-    <string name="my_lists">My lists</string>
+    <string name="my_lists">Show my lists</string>
+    <string name="create_list">Create a list</string>
 </resources>
