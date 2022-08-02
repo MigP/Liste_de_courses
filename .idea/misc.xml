@@ -3,9 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.342" />
+        <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/drawable/ic_launcher_background.xml" value="0.342" />
         <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/layout/activity_splash.xml" value="0.33" />
         <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/layout/language.xml" value="0.365625" />
         <entry key="..\:/Users/STG1851/AndroidStudioProjects/Listedecourses/app/src/main/res/menu/language_menu.xml" value="0.275" />
+        <entry key="..\:/Users/STG1851/AppData/Local/Android/Sdk/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.18802083333333333" />
       </map>
     </option>
   </component>
