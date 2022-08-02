@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.getRoot())
         setTitle(R.string.app_name)
 
-        // Set default language
+        // Set default language in preferences if none is yet defined
             val prefs = PreferenceManager.getDefaultSharedPreferences(
                 applicationContext
             )
@@ -40,20 +40,25 @@ class SplashActivity : AppCompatActivity() {
                 editor.apply()
             }
 
+        // Set the correct language according to preferences, dealing with language codes of regional variations (en_gb, en_us, ...)
+            if (getResources().getConfiguration().locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
+                setLanguage(prefs.getString("language", "")!!)
+            }
+
         // Splash title fade in
-        val splashTitle: TextView = findViewById<View>(R.id.tv_splashTitle) as TextView
-        val titleFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-        splashTitle.startAnimation(titleFadeIn)
+            val splashTitle: TextView = findViewById<View>(R.id.tv_splashTitle) as TextView
+            val titleFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
+            splashTitle.startAnimation(titleFadeIn)
 
         // Splash image fade in
-        val myImageView: ImageView = findViewById<View>(R.id.splashImg) as ImageView
-        val myFadeInAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein15)
-        myImageView.startAnimation(myFadeInAnimation)
+            val myImageView: ImageView = findViewById<View>(R.id.splashImg) as ImageView
+            val myFadeInAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein15)
+            myImageView.startAnimation(myFadeInAnimation)
 
         // Splash button fade in
-        val splashBtn: Button = findViewById<View>(R.id.splashBtn) as Button
-        val buttonFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
-        splashBtn.startAnimation(buttonFadeIn)
+            val splashBtn: Button = findViewById<View>(R.id.splashBtn) as Button
+            val buttonFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
+            splashBtn.startAnimation(buttonFadeIn)
 
 
 
@@ -76,28 +81,28 @@ class SplashActivity : AppCompatActivity() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(
             applicationContext
         )
-        Toast.makeText(this, "Prefs: " + prefs.getString("language", "") + "\nSelected:" + lang, Toast.LENGTH_LONG).show()
-        if (prefs.getString("language", "") !== lang) {
+
+        if (prefs.getString("language", "") != lang) {
             val editor = prefs.edit()
 
             editor.putString("language", lang)
             editor.apply()
-            val myLocale = Locale(lang)
-            val res = resources
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            conf.setLocale(myLocale)
-            res.updateConfiguration(conf, dm)
-            val refresh = Intent(this, SplashActivity::class.java)
-            refresh.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-            finish()
-            startActivity(refresh)
+
+            setLanguage(lang)
         }
+    }
 
-
-
-
-
+    fun setLanguage(lang: String) {
+        val myLocale = Locale(lang)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.setLocale(myLocale)
+        res.updateConfiguration(conf, dm)
+        val refresh = Intent(this, SplashActivity::class.java)
+        refresh.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+        finish()
+        startActivity(refresh)
     }
 }
 

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Shopping list</string>
-    <string name="enter">Enter</string>
+    <string name="my_lists">My lists</string>
 </resources>
