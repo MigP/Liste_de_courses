@@ -1,4 +1,4 @@
-package be.bf.android.listedecourses.models;
+package be.bf.android.listedecourses.dal;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,10 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-import be.bf.android.listedecourses.models.entities.ListeCoursesDAO;
-
 public class DbHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "hangman_users";
+    private static final String DB_NAME = "courses";
     public static int DB_VERSION = 1;
 
     public DbHelper(@Nullable Context context) {
