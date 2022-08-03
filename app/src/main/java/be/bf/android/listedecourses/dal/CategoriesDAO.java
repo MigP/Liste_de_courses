@@ -14,7 +14,7 @@ import be.bf.android.listedecourses.models.entities.ListeCourses;
 import be.bf.android.listedecourses.models.entities.ListeListes;
 
 public class CategoriesDAO {
-    public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProd VARCHAR(10) NOT NULL)";
+    public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProd VARCHAR(15) NOT NULL)";
     public static final String UPGRADE_QUERY = "DROP TABLE categories;";
 
     private DbHelper helper;
@@ -35,7 +35,6 @@ public class CategoriesDAO {
     @SuppressLint("Range")
     public Categories getCategoriesfromCursor(Cursor cursor) {
         Categories categories = new Categories();
-        categories.setCategoriesId(cursor.getInt(cursor.getColumnIndex("id")));
         categories.setCategorieProd(cursor.getString(cursor.getColumnIndex("categorieProd")));
 
         return categories;
@@ -71,7 +70,6 @@ public class CategoriesDAO {
 
     public long insert(Categories categories) {
         ContentValues cv = new ContentValues();
-        cv.put("id", categories.getCategoriesId());
         cv.put("categorieProd", categories.getCategorieProd());
 
         return this.database.insert("categories", null, cv);
@@ -79,7 +77,6 @@ public class CategoriesDAO {
 
     public int update(int id, Categories categories) {
         ContentValues cv = new ContentValues();
-        cv.put("id", categories.getCategoriesId());
         cv.put("categorieProd", categories.getCategorieProd());
 
         return this.database.update("categories", cv, "id = ?", new String[]{String.valueOf(id)});

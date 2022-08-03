@@ -16,11 +16,17 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(CategoriesDAO.CREATE_QUERY);
+        sqLiteDatabase.execSQL(UnitesDAO.CREATE_QUERY);
+        sqLiteDatabase.execSQL(ListeListesDAO.CREATE_QUERY);
         sqLiteDatabase.execSQL(ListeCoursesDAO.CREATE_QUERY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL(CategoriesDAO.UPGRADE_QUERY);
+        sqLiteDatabase.execSQL(UnitesDAO.UPGRADE_QUERY);
+        sqLiteDatabase.execSQL(ListeListesDAO.UPGRADE_QUERY);
         sqLiteDatabase.execSQL(ListeCoursesDAO.UPGRADE_QUERY);
         DB_VERSION = i1;
         onCreate(sqLiteDatabase);

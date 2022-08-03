@@ -1,7 +1,6 @@
 package be.bf.android.listedecourses.models.entities;
 
 public class ListeCourses {
-    private int listeId;
     private String produit;
     private int quantite;
     private String unite;
@@ -13,8 +12,7 @@ public class ListeCourses {
     public ListeCourses() {
     }
 
-    public ListeCourses(int listeId, String produit, int quantite, String unite, String cat1, String cat2, String cat3, int achete) {
-        this.listeId = listeId;
+    public ListeCourses(String produit, int quantite, String unite, String cat1, String cat2, String cat3, int achete) {
         this.produit = produit;
         this.quantite = quantite;
         this.unite = unite;
@@ -27,8 +25,7 @@ public class ListeCourses {
     @Override
     public String toString() {
         return "ListeCourses{" +
-                "listeId='" + listeId + '\'' +
-                ", produit='" + produit + '\'' +
+                "produit='" + produit + '\'' +
                 ", quantite='" + quantite + '\'' +
                 ", unite='" + unite + '\'' +
                 ", cat1='" + cat1 + '\'' +
@@ -36,15 +33,6 @@ public class ListeCourses {
                 ", cat3='" + cat3 + '\'' +
                 ", achete='" + achete + '\'' +
                 '}';
-    }
-
-    public int getListeId() {
-        return listeId;
-    }
-
-    public ListeCourses setListeId(int listeId) {
-        this.listeId = listeId;
-        return this;
     }
 
     public String getProduit() {

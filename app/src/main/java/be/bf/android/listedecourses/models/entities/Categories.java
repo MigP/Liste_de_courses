@@ -1,32 +1,20 @@
 package be.bf.android.listedecourses.models.entities;
 
 public class Categories {
-    private int categoriesId;
     private String categorieProd;
 
     public Categories() {
     }
 
-    public Categories(int categoriesId, String categorieProd) {
-        this.categoriesId = categoriesId;
+    public Categories(String categorieProd) {
         this.categorieProd = categorieProd;
     }
 
     @Override
     public String toString() {
         return "Categories{" +
-                "categoriesId='" + categoriesId + '\'' +
-                ", categorieProd='" + categorieProd + '\'' +
+                "categorieProd='" + categorieProd + '\'' +
                 '}';
-    }
-
-    public int getCategoriesId() {
-        return categoriesId;
-    }
-
-    public Categories setCategoriesId(int categoriesId) {
-        this.categoriesId = categoriesId;
-        return this;
     }
 
     public String getCategorieProd() {
