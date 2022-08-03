@@ -28,7 +28,7 @@ public class ListeListesDAO {
     }
 
     @SuppressLint("Range")
-    public ListeListes getListeListes(Cursor cursor) {
+    public ListeListes getListeListesf(Cursor cursor) {
         ListeListes listeListes = new ListeListes();
         listeListes.setListeListesId(cursor.getInt(cursor.getColumnIndex("id")));
         listeListes.setCategorieList(cursor.getString(cursor.getColumnIndex("categorieList")));

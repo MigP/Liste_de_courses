@@ -28,7 +28,7 @@ public class UnitesDAO {
     }
 
     @SuppressLint("Range")
-    public Unites getCategories(Cursor cursor) {
+    public Unites getCategoriesfromCursor(Cursor cursor) {
         Unites unites = new Unites();
         unites.setUnitesId(cursor.getInt(cursor.getColumnIndex("id")));
         unites.setUnit(cursor.getString(cursor.getColumnIndex("unit")));

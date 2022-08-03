@@ -29,7 +29,7 @@ public class Categories {
         return this;
     }
 
-    public String getCategorieList() {
+    public String getCategorieProd() {
         return categorieProd;
     }
 

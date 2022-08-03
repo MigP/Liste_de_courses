@@ -1,11 +1,16 @@
 package be.bf.android.listedecourses.dal;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import be.bf.android.listedecourses.models.entities.Categories;
+import be.bf.android.listedecourses.models.entities.ListeCourses;
 import be.bf.android.listedecourses.models.entities.ListeListes;
 
 public class CategoriesDAO {
@@ -28,11 +33,63 @@ public class CategoriesDAO {
     }
 
     @SuppressLint("Range")
-    public Categories getCategories(Cursor cursor) {
+    public Categories getCategoriesfromCursor(Cursor cursor) {
         Categories categories = new Categories();
         categories.setCategoriesId(cursor.getInt(cursor.getColumnIndex("id")));
         categories.setCategorieProd(cursor.getString(cursor.getColumnIndex("categorieProd")));
 
         return categories;
+    }
+
+    public List<Categories> findAll() {
+        List<Categories> listCategories = new ArrayList<>();
+        Cursor cursor = this.database.query("categories", null, null, null, null, null, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            do {
+                Categories categories = getCategoriesfromCursor(cursor);
+                listCategories.add(categories);
+            } while (cursor.moveToNext());
+        }
+
+        return listCategories;
+    }
+
+    public List<Categories> findById(int id) {
+        List<Categories> listCategories = new ArrayList<>();
+        Cursor cursor = this.database.rawQuery("SELECT * FROM categories WHERE id = ?", new String[]{String.valueOf(id)});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                listCategories.add(getCategoriesfromCursor(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        return listCategories;
+    }
+
+    public long insert(Categories categories) {
+        ContentValues cv = new ContentValues();
+        cv.put("id", categories.getCategoriesId());
+        cv.put("categorieProd", categories.getCategorieProd());
+
+        return this.database.insert("categories", null, cv);
+    }
+
+    public int update(int id, Categories categories) {
+        ContentValues cv = new ContentValues();
+        cv.put("id", categories.getCategoriesId());
+        cv.put("categorieProd", categories.getCategorieProd());
+
+        return this.database.update("categories", cv, "id = ?", new String[]{String.valueOf(id)});
+    }
+
+    public int delete(int id) {
+        return this.database.delete("categories", "id = ?", new String[]{id + ""});
+    }
+
+    public void close() {
+        database.close();
     }
 }

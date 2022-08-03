@@ -60,9 +60,9 @@ public class ListeCoursesDAO implements Closeable {
         return listesCourses;
     }
 
-    public List<ListeCourses> findByListeId(int listeId) {
+    public List<ListeCourses> findByListeId(int id) {
         List<ListeCourses> listesCourses = new ArrayList<>();
-        Cursor cursor = this.database.rawQuery("SELECT * FROM liste_courses WHERE listeId = ?", new String[]{String.valueOf(listeId)});
+        Cursor cursor = this.database.rawQuery("SELECT * FROM liste_courses WHERE id = ?", new String[]{String.valueOf(id)});
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -106,6 +106,6 @@ public class ListeCoursesDAO implements Closeable {
     }
 
     public void close() {
-        // TODO database.close();
+        database.close();
     }
 }
