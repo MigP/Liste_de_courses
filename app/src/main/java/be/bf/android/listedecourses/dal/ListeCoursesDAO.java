@@ -33,7 +33,7 @@ public class ListeCoursesDAO implements Closeable {
     @SuppressLint("Range")
     public ListeCourses getListeCoursesfromCursor(Cursor cursor) {
         ListeCourses listeCourses = new ListeCourses();
-        listeCourses.setListeId(cursor.getInt(cursor.getColumnIndex("listeId")));
+        listeCourses.setListeId(cursor.getInt(cursor.getColumnIndex("id")));
         listeCourses.setProduit(cursor.getString(cursor.getColumnIndex("produit")));
         listeCourses.setQuantite(cursor.getInt(cursor.getColumnIndex("quantite")));
         listeCourses.setUnite((cursor.getString(cursor.getColumnIndex("unite"))));
@@ -75,7 +75,7 @@ public class ListeCoursesDAO implements Closeable {
 
     public long insert(ListeCourses listeCourses) {
         ContentValues cv = new ContentValues();
-        cv.put("listeId", listeCourses.getListeId());
+        cv.put("id", listeCourses.getListeId());
         cv.put("produit", listeCourses.getProduit());
         cv.put("quantite", listeCourses.getQuantite());
         cv.put("unite", listeCourses.getUnite());
@@ -89,7 +89,7 @@ public class ListeCoursesDAO implements Closeable {
 
     public int update(int id, ListeCourses listeCourses) {
         ContentValues cv = new ContentValues();
-        cv.put("listeId", listeCourses.getListeId());
+        cv.put("id", listeCourses.getListeId());
         cv.put("produit", listeCourses.getProduit());
         cv.put("quantite", listeCourses.getQuantite());
         cv.put("unite", listeCourses.getUnite());
