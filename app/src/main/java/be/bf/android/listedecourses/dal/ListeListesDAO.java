@@ -12,7 +12,7 @@ import java.util.List;
 import be.bf.android.listedecourses.models.entities.ListeListes;
 
 public class ListeListesDAO {
-    public static final String CREATE_QUERY = "CREATE TABLE liste_listes(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listId INTEGER NOT NULL, CONSTRAINT fk_liste_listes FOREIGN KEY (listId) REFERENCES liste_listes(id))";
+    public static final String CREATE_QUERY = "CREATE TABLE liste_listes(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listName VARCHAR(15) NOT NULL, listTag VARCHAR(20))";
     public static final String UPGRADE_QUERY = "DROP TABLE liste_listes;";
 
     private DbHelper helper;
@@ -33,7 +33,8 @@ public class ListeListesDAO {
     @SuppressLint("Range")
     public ListeListes getListeListesfromCursor(Cursor cursor) {
         ListeListes listeListes = new ListeListes();
-        listeListes.setListId(cursor.getInt(cursor.getColumnIndex("listId")));
+        listeListes.setListName(cursor.getString(cursor.getColumnIndex("listName")));
+        listeListes.setListTag(cursor.getString(cursor.getColumnIndex("listTag")));
 
         return listeListes;
     }
@@ -68,14 +69,16 @@ public class ListeListesDAO {
 
     public long insert(ListeListes listeListes) {
         ContentValues cv = new ContentValues();
-        cv.put("listId", listeListes.getListId());
+        cv.put("listName", listeListes.getListName());
+        cv.put("listTag", listeListes.getListTag());
 
         return this.database.insert("liste_listes", null, cv);
     }
 
     public int update(int id, ListeListes listeListes) {
         ContentValues cv = new ContentValues();
-        cv.put("listId", listeListes.getListId());
+        cv.put("listName", listeListes.getListName());
+        cv.put("listTag", listeListes.getListTag());
 
         return this.database.update("liste_listes", cv, "id = ?", new String[]{String.valueOf(id)});
     }

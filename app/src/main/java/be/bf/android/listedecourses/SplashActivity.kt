@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import be.bf.android.listedecourses.dal.CategoriesDAO
 import be.bf.android.listedecourses.dal.ListeCoursesDAO
+import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
 import be.bf.android.listedecourses.databinding.ActivitySplashBinding
 import be.bf.android.listedecourses.models.entities.Categories
@@ -120,145 +121,157 @@ class SplashActivity : AppCompatActivity() {
 
     fun createList(view: View) {
 
+        // populateDb()
+
         // Create list
         val listeCoursesDAO = ListeCoursesDAO(this)
         listeCoursesDAO.openWritable()
-        listeCoursesDAO.insert(ListeCourses("Test list", "Test category", "Apples", 8, 7, 1, 2, 3, 0))
+        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
         println(listeCoursesDAO.toString())
 
 
+
+
+        val loginIntent = Intent(this, MainActivity::class.java)
+        startActivity(loginIntent)
+    }
+
+    fun displayLists() {
+        val listeListesDAO = ListeListesDAO(this)
+        listeListesDAO.openReadable()
+
+    }
+
+    fun populateDb() {
         // Populate Table unites
-//        val unitesDAO = UnitesDAO(this)
-//        unitesDAO.openWritable()
-//        unitesDAO.insert(Unites("mg"))
-//        unitesDAO.insert(Unites("g"))
-//        unitesDAO.insert(Unites("kg"))
-//        unitesDAO.insert(Unites("ml"))
-//        unitesDAO.insert(Unites("cl"))
-//        unitesDAO.insert(Unites("l"))
-//        unitesDAO.insert(Unites("unit"))
+        val unitesDAO = UnitesDAO(this)
+        unitesDAO.openWritable()
+        unitesDAO.insert(Unites("mg"))
+        unitesDAO.insert(Unites("g"))
+        unitesDAO.insert(Unites("kg"))
+        unitesDAO.insert(Unites("ml"))
+        unitesDAO.insert(Unites("cl"))
+        unitesDAO.insert(Unites("l"))
+        unitesDAO.insert(Unites("unit"))
 
         // Populate Table categories
-//        val categoriesDAO = CategoriesDAO(this)
-//        categoriesDAO.openWritable()
-//        categoriesDAO.insert(
-//            Categories(
-//                "fruits"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "vegetables"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "canned_goods"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "frozen_food"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "regional_products"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "meat"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "fish_and_seafood"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "dairy_products"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "condiments_and_spices"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "sauces_and_oils"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "snacks"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "bread_and_bakery"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "beverages"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "pasta_and_rice"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "cereals"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "baking"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "personal_care"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "health_care"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "paper_and_wrap"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "household_supplies"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "baby_items"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "pet_supplies"
-//            )
-//        )
-//        categoriesDAO.insert(
-//            Categories(
-//                "other_items"
-//            )
-//        )
-
-//        val loginIntent = Intent(this, MainActivity::class.java)
-//        startActivity(loginIntent)
+        val categoriesDAO = CategoriesDAO(this)
+        categoriesDAO.openWritable()
+        categoriesDAO.insert(
+            Categories(
+                "fruits"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "vegetables"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "canned_goods"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "frozen_food"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "regional_products"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "meat"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "fish_and_seafood"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "dairy_products"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "condiments_and_spices"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "sauces_and_oils"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "snacks"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "bread_and_bakery"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "beverages"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "pasta_and_rice"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "cereals"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "baking"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "personal_care"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "health_care"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "paper_and_wrap"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "household_supplies"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "baby_items"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "pet_supplies"
+            )
+        )
+        categoriesDAO.insert(
+            Categories(
+                "other_items"
+            )
+        )
     }
 }
 

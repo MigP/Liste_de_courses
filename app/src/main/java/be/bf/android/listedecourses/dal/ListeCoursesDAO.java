@@ -12,7 +12,7 @@ import java.util.List;
 import be.bf.android.listedecourses.models.entities.ListeCourses;
 
 public class ListeCoursesDAO implements Closeable {
-    public static final String CREATE_QUERY = "CREATE TABLE liste_courses(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listName VARCHAR(15) NOT NULL, listCat VARCHAR(20) NOT NULL, produit VARCHAR(15) NOT NULL, quantite INTEGER NOT NULL DEFAULT 0, uniteId INTEGER NOT NULL DEFAULT 0, cat1 INTEGER NOT NULL, categorieProdId2 INTEGER NOT NULL, categorieProdId3 INTEGER NOT NULL, achete INTEGER NOT NULL DEFAULT 0, CONSTRAINT fk_unites FOREIGN KEY (uniteId) REFERENCES unites(id), CONSTRAINT fk_categories1 FOREIGN KEY (categorieProdId1) REFERENCES categories(id), CONSTRAINT fk_categories2 FOREIGN KEY (categorieProdId2) REFERENCES categories(id), CONSTRAINT fk_categories3 FOREIGN KEY (categorieProdId3) REFERENCES categories(id))";
+    public static final String CREATE_QUERY = "CREATE TABLE liste_courses(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listeId INTEGER NOT NULL, produit VARCHAR(15) NOT NULL, quantite INTEGER NOT NULL DEFAULT 0, uniteId INTEGER NOT NULL DEFAULT 0, categorieProdId1 INTEGER NOT NULL, categorieProdId2 INTEGER NOT NULL, categorieProdId3 INTEGER NOT NULL, achete INTEGER NOT NULL DEFAULT 0, CONSTRAINT fk_liste_listes FOREIGN KEY (listeId) REFERENCES liste_listes(id), CONSTRAINT fk_unites FOREIGN KEY (uniteId) REFERENCES unites(id), CONSTRAINT fk_categories1 FOREIGN KEY (categorieProdId1) REFERENCES categories(id), CONSTRAINT fk_categories2 FOREIGN KEY (categorieProdId2) REFERENCES categories(id), CONSTRAINT fk_categories3 FOREIGN KEY (categorieProdId3) REFERENCES categories(id))";
     public static final String UPGRADE_QUERY = "DROP TABLE liste_courses;";
 
     private DbHelper helper;
@@ -33,8 +33,7 @@ public class ListeCoursesDAO implements Closeable {
     @SuppressLint("Range")
     public ListeCourses getListeCoursesfromCursor(Cursor cursor) {
         ListeCourses listeCourses = new ListeCourses();
-        listeCourses.setProduit(cursor.getString(cursor.getColumnIndex("listName")));
-        listeCourses.setProduit(cursor.getString(cursor.getColumnIndex("listCat")));
+        listeCourses.setListeId(cursor.getInt(cursor.getColumnIndex("listeId")));
         listeCourses.setProduit(cursor.getString(cursor.getColumnIndex("produit")));
         listeCourses.setQuantite(cursor.getInt(cursor.getColumnIndex("quantite")));
         listeCourses.setUniteId((cursor.getInt(cursor.getColumnIndex("uniteId"))));
@@ -76,8 +75,7 @@ public class ListeCoursesDAO implements Closeable {
 
     public long insert(ListeCourses listeCourses) {
         ContentValues cv = new ContentValues();
-        cv.put("listName", listeCourses.getListName());
-        cv.put("listCat", listeCourses.getListCat());
+        cv.put("listeId", listeCourses.getListeId());
         cv.put("produit", listeCourses.getProduit());
         cv.put("quantite", listeCourses.getQuantite());
         cv.put("uniteId", listeCourses.getUniteId());
@@ -91,8 +89,7 @@ public class ListeCoursesDAO implements Closeable {
 
     public int update(int id, ListeCourses listeCourses) {
         ContentValues cv = new ContentValues();
-        cv.put("listName", listeCourses.getListName());
-        cv.put("listCat", listeCourses.getListCat());
+        cv.put("listeId", listeCourses.getListeId());
         cv.put("produit", listeCourses.getProduit());
         cv.put("quantite", listeCourses.getQuantite());
         cv.put("uniteId", listeCourses.getUniteId());

@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/splashImg"
-        android:layout_width="291dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="127dp"
+        android:layout_marginBottom="192dp"
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toTopOf="@+id/showListsBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,36 +32,42 @@
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/splashImg"
-        app:layout_constraintEnd_toEndOf="@+id/splashImg"
-        app:layout_constraintStart_toStartOf="@+id/splashImg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/showListsBtn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:text="@string/my_lists"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/createListBtn"
-        app:layout_constraintEnd_toEndOf="@+id/createListBtn"
-        app:layout_constraintStart_toStartOf="@+id/createListBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/splashImg" />
 
     <Button
         android:id="@+id/createListBtn"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="41dp"
         android:text="@string/create_list"
         app:cornerRadius="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showListsBtn" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lists_preview_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/showListsBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashImg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

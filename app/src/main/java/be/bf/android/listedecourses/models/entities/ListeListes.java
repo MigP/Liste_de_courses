@@ -1,28 +1,40 @@
 package be.bf.android.listedecourses.models.entities;
 
 public class ListeListes {
-    private int listId;
+    private String listName;
+    private String listTag;
 
     public ListeListes() {
     }
 
-    public ListeListes(int listId) {
-        this.listId = listId;
+    public ListeListes(String listName, String listTag) {
+        this.listName = listName;
+        this.listTag = listTag;
     }
 
     @Override
     public String toString() {
         return "ListeListes{" +
-                "listId='" + listId + '\'' +
+                "listName='" + listName + '\'' +
+                ", listTag='" + listTag + '\'' +
                 '}';
     }
 
-    public int getListId() {
-        return listId;
+    public String getListName() {
+        return listName;
     }
 
-    public ListeListes setListId(int listId) {
-        this.listId = listId;
+    public ListeListes setListName(String listName) {
+        this.listName = listName;
+        return this;
+    }
+
+    public String getListTag() {
+        return listTag;
+    }
+
+    public ListeListes setListTag(String listTag) {
+        this.listTag = listTag;
         return this;
     }
 }
