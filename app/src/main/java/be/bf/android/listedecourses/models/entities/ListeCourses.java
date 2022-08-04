@@ -5,24 +5,24 @@ public class ListeCourses {
     private String listCat;
     private String produit;
     private int quantite;
-    private String unite;
-    private String cat1;
-    private String cat2;
-    private String cat3;
+    private int uniteId;
+    private int categorieProdId1;
+    private int categorieProdId2;
+    private int categorieProdId3;
     private int achete;
 
     public ListeCourses() {
     }
 
-    public ListeCourses(String listName, String listCat, String produit, int quantite, String unite, String cat1, String cat2, String cat3, int achete) {
+    public ListeCourses(String listName, String listCat, String produit, int quantite, int uniteId, int categorieProdId1, int categorieProdId2, int categorieProdId3, int achete) {
         this.listName = listName;
         this.listCat = listCat;
         this.produit = produit;
         this.quantite = quantite;
-        this.unite = unite;
-        this.cat1 = cat1;
-        this.cat2 = cat2;
-        this.cat3 = cat3;
+        this.uniteId = uniteId;
+        this.categorieProdId1 = categorieProdId1;
+        this.categorieProdId2 = categorieProdId2;
+        this.categorieProdId3 = categorieProdId3;
         this.achete = achete;
     }
 
@@ -33,10 +33,10 @@ public class ListeCourses {
                 ", listCat='" + listCat + '\'' +
                 ", produit='" + produit + '\'' +
                 ", quantite='" + quantite + '\'' +
-                ", unite='" + unite + '\'' +
-                ", cat1='" + cat1 + '\'' +
-                ", cat2='" + cat2 + '\'' +
-                ", cat3='" + cat3 + '\'' +
+                ", uniteId='" + uniteId + '\'' +
+                ", categorieProdId1='" + categorieProdId1 + '\'' +
+                ", categorieProdId2='" + categorieProdId2 + '\'' +
+                ", categorieProdId3='" + categorieProdId3 + '\'' +
                 ", achete='" + achete + '\'' +
                 '}';
     }
@@ -77,39 +77,39 @@ public class ListeCourses {
         return this;
     }
 
-    public String getUnite() {
-        return unite;
+    public int getUniteId() {
+        return uniteId;
     }
 
-    public ListeCourses setUnite(String unite) {
-        this.unite = unite;
+    public ListeCourses setUniteId(int uniteId) {
+        this.uniteId = uniteId;
         return this;
     }
 
-    public String getCat1() {
-        return cat1;
+    public int getCategorieProdId1() {
+        return categorieProdId1;
     }
 
-    public ListeCourses setCat1(String cat1) {
-        this.cat1 = cat1;
+    public ListeCourses setCategorieProdId1(int categorieProdId1) {
+        this.categorieProdId1 = categorieProdId1;
         return this;
     }
 
-    public String getCat2() {
-        return cat2;
+    public int getCategorieProdId2() {
+        return categorieProdId2;
     }
 
-    public ListeCourses setCat2(String cat2) {
-        this.cat2 = cat2;
+    public ListeCourses setCategorieProdId2(int categorieProdId2) {
+        this.categorieProdId2 = categorieProdId2;
         return this;
     }
 
-    public String getCat3() {
-        return cat3;
+    public int getCategorieProdId3() {
+        return categorieProdId3;
     }
 
-    public ListeCourses setCat3(String cat3) {
-        this.cat3 = cat3;
+    public ListeCourses setCategorieProdId3(int categorieProdId3) {
+        this.categorieProdId3 = categorieProdId3;
         return this;
     }
 

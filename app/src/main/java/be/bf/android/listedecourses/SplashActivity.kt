@@ -15,9 +15,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import be.bf.android.listedecourses.dal.CategoriesDAO
+import be.bf.android.listedecourses.dal.ListeCoursesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
 import be.bf.android.listedecourses.databinding.ActivitySplashBinding
 import be.bf.android.listedecourses.models.entities.Categories
+import be.bf.android.listedecourses.models.entities.ListeCourses
 import be.bf.android.listedecourses.models.entities.Unites
 import java.util.*
 
@@ -117,6 +119,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun createList(view: View) {
+
+        // Create list
+        val listeCoursesDAO = ListeCoursesDAO(this)
+        listeCoursesDAO.openWritable()
+        listeCoursesDAO.insert(ListeCourses("Test list", "Test category", "Apples", 8, 7, 1, 2, 3, 0))
+        println(listeCoursesDAO.toString())
+
 
         // Populate Table unites
 //        val unitesDAO = UnitesDAO(this)
@@ -248,8 +257,8 @@ class SplashActivity : AppCompatActivity() {
 //            )
 //        )
 
-        val loginIntent = Intent(this, MainActivity::class.java)
-        startActivity(loginIntent)
+//        val loginIntent = Intent(this, MainActivity::class.java)
+//        startActivity(loginIntent)
     }
 }
 
