@@ -1,6 +1,8 @@
 package be.bf.android.listedecourses.models.entities;
 
 public class ListeCourses {
+    private String listName;
+    private String listCat;
     private String produit;
     private int quantite;
     private String unite;
@@ -12,7 +14,9 @@ public class ListeCourses {
     public ListeCourses() {
     }
 
-    public ListeCourses(String produit, int quantite, String unite, String cat1, String cat2, String cat3, int achete) {
+    public ListeCourses(String listName, String listCat, String produit, int quantite, String unite, String cat1, String cat2, String cat3, int achete) {
+        this.listName = listName;
+        this.listCat = listCat;
         this.produit = produit;
         this.quantite = quantite;
         this.unite = unite;
@@ -25,7 +29,9 @@ public class ListeCourses {
     @Override
     public String toString() {
         return "ListeCourses{" +
-                "produit='" + produit + '\'' +
+                "listName='" + listName + '\'' +
+                ", listCat='" + listCat + '\'' +
+                ", produit='" + produit + '\'' +
                 ", quantite='" + quantite + '\'' +
                 ", unite='" + unite + '\'' +
                 ", cat1='" + cat1 + '\'' +
@@ -33,6 +39,24 @@ public class ListeCourses {
                 ", cat3='" + cat3 + '\'' +
                 ", achete='" + achete + '\'' +
                 '}';
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public ListeCourses setListName(String listName) {
+        this.listName = listName;
+        return this;
+    }
+
+    public String getListCat() {
+        return listCat;
+    }
+
+    public ListeCourses setListCat(String listCat) {
+        this.listCat = listCat;
+        return this;
     }
 
     public String getProduit() {

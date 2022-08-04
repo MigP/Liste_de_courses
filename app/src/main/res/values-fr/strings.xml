@@ -31,4 +31,5 @@
     <string name="baby_items">Articles pour bébé</string>
     <string name="pet_supplies">Animaux domestiques</string>
     <string name="other_items">Autres articles</string>
+    <string name="your_shopping_lists">Vos listes de courses</string>
 </resources>

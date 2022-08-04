@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.bf.android.listedecourses.models.entities.Categories;
-import be.bf.android.listedecourses.models.entities.ListeCourses;
-import be.bf.android.listedecourses.models.entities.ListeListes;
 
 public class CategoriesDAO {
     public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProd VARCHAR(15) NOT NULL)";

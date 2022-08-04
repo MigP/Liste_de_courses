@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.bf.android.listedecourses.models.entities.Categories;
-import be.bf.android.listedecourses.models.entities.ListeListes;
 import be.bf.android.listedecourses.models.entities.Unites;
 
 public class UnitesDAO {

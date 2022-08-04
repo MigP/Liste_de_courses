@@ -31,4 +31,7 @@
     <string name="baby_items">Baby items</string>
     <string name="pet_supplies">Pet supplies</string>
     <string name="other_items">Other items</string>
+    <string name="your_shopping_lists">Your shopping lists</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
