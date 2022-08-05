@@ -17,7 +17,7 @@
         android:textColor="@color/title"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/frame_main"
+        app:layout_constraintBottom_toTopOf="@+id/main_fragment_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,12 +31,12 @@
         android:layout_marginBottom="37dp"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/frame_main"
-        app:layout_constraintTop_toBottomOf="@+id/frame_main"
+        app:layout_constraintEnd_toEndOf="@+id/main_fragment_frame"
+        app:layout_constraintTop_toBottomOf="@+id/main_fragment_frame"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <FrameLayout
-        android:id="@+id/frame_main"
+        android:id="@+id/main_fragment_frame"
         android:layout_width="409dp"
         android:layout_height="0dp"
         android:layout_marginBottom="1dp"

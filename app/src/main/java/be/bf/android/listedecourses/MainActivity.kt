@@ -1,15 +1,17 @@
 package be.bf.android.listedecourses
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import be.bf.android.listedecourses.databinding.ActivityMainBinding
+import be.bf.android.listedecourses.models.FragmentCreateList
 import be.bf.android.listedecourses.models.FragmentShowList
 import java.util.*
 
@@ -22,29 +24,45 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.getRoot())
         setTitle(R.string.app_name)
 
-        // Shows fragment
-        val fm: FragmentManager = supportFragmentManager
-        val transaction: FragmentTransaction = fm.beginTransaction()
+        // Gets the extra info contained in the intent and decides which fragment to display
+            val extra = this.intent.extras
 
-            transaction
-                .add(R.id.frame_main, FragmentShowList.newInstance())
-                .commit()
+        // Shows fragment
+            if (extra != null) {
+                val f = extra.getString("targetFragment")
+
+                if (f.equals("show")) {
+                    val fm: FragmentManager = supportFragmentManager
+                    val transaction: FragmentTransaction = fm.beginTransaction()
+
+                    transaction
+                        .add(R.id.main_fragment_frame, FragmentShowList.newInstance())
+                        .commit()
+                } else if (f.equals("create")){
+                    val fm: FragmentManager = supportFragmentManager
+                    val transaction: FragmentTransaction = fm.beginTransaction()
+
+                    transaction
+                        .add(R.id.main_fragment_frame, FragmentCreateList.newInstance())
+                        .commit()
+                }
+            }
 
         // Set default language in preferences if none is yet defined
-        val prefs = PreferenceManager.getDefaultSharedPreferences(
-            applicationContext
-        )
-        val editor = prefs.edit()
+            val prefs = PreferenceManager.getDefaultSharedPreferences(
+                applicationContext
+            )
+            val editor = prefs.edit()
 
-        if (prefs.getString("language", "") == "") {
-            editor.putString("language", "en")
-            editor.apply()
-        }
+            if (prefs.getString("language", "") == "") {
+                editor.putString("language", "en")
+                editor.apply()
+            }
 
         // Set the correct language according to preferences, dealing with language codes of regional variations (en_gb, en_us, ...)
-        if (getResources().getConfiguration().locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
-            setLanguage(prefs.getString("language", "")!!)
-        }
+            if (getResources().getConfiguration().locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
+                setLanguage(prefs.getString("language", "")!!)
+            }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu

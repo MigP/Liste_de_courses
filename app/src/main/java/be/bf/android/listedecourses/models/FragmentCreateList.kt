@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
+import be.bf.android.listedecourses.models.FragmentShowList
 import be.bf.android.listedecourses.models.entities.Categories
 
-class FragmentShowList : Fragment() {
+class FragmentCreateList : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -20,11 +21,9 @@ class FragmentShowList : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v: View = inflater.inflate(R.layout.fragment_show_lists, container, false)
+        val v: View = inflater.inflate(R.layout.fragment_create_list, container, false)
 
-        val categoriesDAO = CategoriesDAO(context)
-        categoriesDAO.openReadable()
-//        var t: TextView = v.findViewById(R.id.textView2)
+//        var t: TextView = v.findViewById(R.id.textView3)
 //        for (item: Categories in categoriesDAO.findAll())
 //            t.setText(t.text.toString().plus("\n").plus(item.categorieProd))
         return v
@@ -34,7 +33,7 @@ class FragmentShowList : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            FragmentShowList().apply {
+            FragmentCreateList().apply {
             }
     }
 }

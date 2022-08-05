@@ -75,7 +75,10 @@ class SplashActivity : AppCompatActivity() {
             createListBtnFadeIn.setStartOffset(1500)
             createListBtn.startAnimation(createListBtnFadeIn)
 
+        binding.showListsBtn.setOnClickListener(this::showLists)
         binding.createListBtn.setOnClickListener(this::createList)
+
+        // initialPopulateDb()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu
@@ -119,30 +122,25 @@ class SplashActivity : AppCompatActivity() {
         startActivity(refresh)
     }
 
-    fun createList(view: View) {
-
-        // populateDb()
-
-        // Create list
-        val listeCoursesDAO = ListeCoursesDAO(this)
-        listeCoursesDAO.openWritable()
-        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
-        println(listeCoursesDAO.toString())
-
-
-
-
-        val loginIntent = Intent(this, MainActivity::class.java)
-        startActivity(loginIntent)
+    fun createList(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+        val createListIntent = Intent(this, MainActivity::class.java)
+        createListIntent.putExtra("targetFragment", "create")
+        startActivity(createListIntent)
     }
 
-    fun displayLists() {
-        val listeListesDAO = ListeListesDAO(this)
-        listeListesDAO.openReadable()
+    fun showLists(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the show lists fragment is visible
+        val showListsIntent = Intent(this, MainActivity::class.java)
+        showListsIntent.putExtra("targetFragment", "show")
+        startActivity(showListsIntent)
 
+
+//        val listeCoursesDAO = ListeCoursesDAO(this)
+//        listeCoursesDAO.openWritable()
+//        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
+//        println(listeCoursesDAO.toString())
     }
 
-    fun populateDb() {
+    fun initialPopulateDb() {
         // Populate Table unites
         val unitesDAO = UnitesDAO(this)
         unitesDAO.openWritable()
