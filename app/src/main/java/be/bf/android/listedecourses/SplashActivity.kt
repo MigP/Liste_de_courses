@@ -54,25 +54,25 @@ class SplashActivity : AppCompatActivity() {
         // Splash title fade in
             val splashTitle: TextView = findViewById<View>(R.id.tv_splashTitle) as TextView
             val titleFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            titleFadeIn.setStartOffset(1000)
+            titleFadeIn.setStartOffset(500)
             splashTitle.startAnimation(titleFadeIn)
 
         // Splash image fade in
             val splashImg: ImageView = findViewById<View>(R.id.splashImg) as ImageView
             val splashImageAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            splashImageAnimation.setStartOffset(500)
+            splashImageAnimation.setStartOffset(250)
             splashImg.startAnimation(splashImageAnimation)
 
         // Show lists button fade in
             val showListsBtn: Button = findViewById<View>(R.id.showListsBtn) as Button
-            val showListsBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
-            showListsBtnFadeIn.setStartOffset(1500)
+            val showListsBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
+            showListsBtnFadeIn.setStartOffset(1000)
             showListsBtn.startAnimation(showListsBtnFadeIn)
 
         // Create list button fade in
             val createListBtn: Button = findViewById<View>(R.id.createListBtn) as Button
-            val createListBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein20)
-            createListBtnFadeIn.setStartOffset(1500)
+            val createListBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
+            createListBtnFadeIn.setStartOffset(1000)
             createListBtn.startAnimation(createListBtnFadeIn)
 
         binding.showListsBtn.setOnClickListener(this::showLists)

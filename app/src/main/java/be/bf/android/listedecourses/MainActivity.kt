@@ -43,6 +43,13 @@ class MainActivity : AppCompatActivity() {
                 } else if (f.equals("create")){
                     binding.createListFloatingActionButton.hide()
                     val fm: FragmentManager = supportFragmentManager
+                    fm.setFragmentResultListener("requestKey", this) { key, bundle ->
+                        val result = bundle.getString("createFragmentData")
+                        if (result.equals("cancelCreate")) { // Show splash screen
+                            val homeIntent = Intent(this, SplashActivity::class.java)
+                            startActivity(homeIntent)
+                        }
+                     }
                     val transaction: FragmentTransaction = fm.beginTransaction()
 
                     transaction
@@ -115,5 +122,11 @@ class MainActivity : AppCompatActivity() {
         val createListIntent = Intent(this, MainActivity::class.java)
         createListIntent.putExtra("targetFragment", "create")
         startActivity(createListIntent)
+    }
+
+    fun showLists(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+        val showListsIntent = Intent(this, MainActivity::class.java)
+        showListsIntent.putExtra("targetFragment", "show")
+        startActivity(showListsIntent)
     }
 }
