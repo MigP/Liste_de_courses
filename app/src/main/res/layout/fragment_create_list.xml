@@ -11,17 +11,100 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tv_createListTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="293dp"
-            android:text="Create list fragment"
-            android:textColor="#FF0000"
-            android:textSize="20sp"
+            android:layout_marginTop="30dp"
+            android:text="Create a new list"
+            android:textAlignment="center"
+            android:textColor="@color/title"
+            android:textSize="34sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/create_list_recycler"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/create_list_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="149dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/createListBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_createListTitle" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="58dp"
+            android:layout_height="56dp"
+            app:layout_constraintEnd_toStartOf="@+id/addFloatingActionButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:ems="10"
+            android:hint="Product name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/spinner"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/create_list_recycler"
+            app:layout_constraintTop_toBottomOf="@+id/create_list_recycler" />
+
+        <Button
+            android:id="@+id/cancelCreateListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            app:layout_constraintBaseline_toBaselineOf="@+id/createListBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/createListBtn" />
+
+        <Button
+            android:id="@+id/createListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginBottom="81dp"
+            android:text="Create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancelCreateListBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_list_recycler" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_input_add"
+            app:backgroundTint="#7DB880"
+            app:layout_constraintEnd_toStartOf="@+id/deleteFloatingActionButton"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/spinner"
+            app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteFloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@android:drawable/ic_delete"
+            app:backgroundTint="#C16A6A"
+            app:layout_constraintEnd_toStartOf="@+id/create_list_recycler"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/addFloatingActionButton"
+            app:layout_constraintTop_toTopOf="@+id/addFloatingActionButton" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

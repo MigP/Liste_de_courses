@@ -9,6 +9,7 @@ import android.widget.TextView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
 import be.bf.android.listedecourses.models.entities.Categories
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FragmentShowList : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
