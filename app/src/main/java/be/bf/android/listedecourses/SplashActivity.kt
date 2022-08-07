@@ -78,7 +78,7 @@ class SplashActivity : AppCompatActivity() {
         binding.showListsBtn.setOnClickListener(this::showLists)
         binding.createListBtn.setOnClickListener(this::createList)
 
-        // initialPopulateDb()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu
@@ -133,7 +133,7 @@ class SplashActivity : AppCompatActivity() {
         showListsIntent.putExtra("targetFragment", "show")
         startActivity(showListsIntent)
 
-
+//       initialPopulateDb()
 //        val listeCoursesDAO = ListeCoursesDAO(this)
 //        listeCoursesDAO.openWritable()
 //        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
@@ -142,134 +142,41 @@ class SplashActivity : AppCompatActivity() {
 
     fun initialPopulateDb() {
         // Populate Table unites
-        val unitesDAO = UnitesDAO(this)
-        unitesDAO.openWritable()
-        unitesDAO.insert(Unites("mg"))
-        unitesDAO.insert(Unites("g"))
-        unitesDAO.insert(Unites("kg"))
-        unitesDAO.insert(Unites("ml"))
-        unitesDAO.insert(Unites("cl"))
-        unitesDAO.insert(Unites("l"))
-        unitesDAO.insert(Unites("unit"))
+            val unitesDAO = UnitesDAO(this)
+            unitesDAO.openWritable()
+            unitesDAO.insert(Unites("mg", "mg"))
+            unitesDAO.insert(Unites("g", "g"))
+            unitesDAO.insert(Unites("kg", "kg"))
+            unitesDAO.insert(Unites("ml", "ml"))
+            unitesDAO.insert(Unites("cl", "cl"))
+            unitesDAO.insert(Unites("l", "l"))
+            unitesDAO.insert(Unites("unités", "units"))
 
         // Populate Table categories
-        val categoriesDAO = CategoriesDAO(this)
-        categoriesDAO.openWritable()
-        categoriesDAO.insert(
-            Categories(
-                "fruits"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "vegetables"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "canned_goods"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "frozen_food"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "regional_products"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "meat"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "fish_and_seafood"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "dairy_products"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "condiments_and_spices"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "sauces_and_oils"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "snacks"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "bread_and_bakery"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "beverages"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "pasta_and_rice"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "cereals"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "baking"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "personal_care"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "health_care"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "paper_and_wrap"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "household_supplies"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "baby_items"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "pet_supplies"
-            )
-        )
-        categoriesDAO.insert(
-            Categories(
-                "other_items"
-            )
-        )
+            val categoriesDAO = CategoriesDAO(this)
+            categoriesDAO.openWritable()
+            categoriesDAO.insert(Categories("Fruits", "Fruit", "apple"))
+            categoriesDAO.insert(Categories("Conserves", "Canned Goods", "canned_food"))
+            categoriesDAO.insert(Categories("Surgelés", "Frozen Food", "frozen_food"))
+            categoriesDAO.insert(Categories("Produits régionaux", "Regional products", "noodle"))
+            categoriesDAO.insert(Categories("Viande", "Meat", "pork_leg"))
+            categoriesDAO.insert(Categories("Poissons et crustacés", "Fish and shellfish", "seafood"))
+            categoriesDAO.insert(Categories("Produits laitiers", "Dairy products", "dairy_products"))
+            categoriesDAO.insert(Categories("Condiments et épices", "Condiments and spices", "salt_and_peper"))
+            categoriesDAO.insert(Categories("Sauces et huiles", "Sauces and oils", "sauce_bottle"))
+            categoriesDAO.insert(Categories("Snacks", "Snacks","snack"))
+            categoriesDAO.insert(Categories("Pain et boulangerie", "Bread and bakery", "breads"))
+            categoriesDAO.insert(Categories("Boissons", "Beverages", "mineral_water"))
+            categoriesDAO.insert(Categories("Pâtes et riz", "Pasta and rice", "pasta"))
+            categoriesDAO.insert(Categories("Céréales", "Cereals", "cereals"))
+            categoriesDAO.insert(Categories("Pâtisserie", "Baking", "cupcake"))
+            categoriesDAO.insert(Categories("Soins personnels", "Personal care", "toiletries"))
+            categoriesDAO.insert(Categories("Soins de santé", "Health care", "alcohol"))
+            categoriesDAO.insert(Categories("Papier et emballage", "Paper and wrap", "paper_towel"))
+            categoriesDAO.insert(Categories("Articles ménagers", "Household supplies", "cleaning_products"))
+            categoriesDAO.insert(Categories("Articles pour bébé", "Baby items", "baby"))
+            categoriesDAO.insert(Categories("Animaux domestiques", "Pet supplies", "pet"))
+            categoriesDAO.insert(Categories("Autres articles", "Other items", "more"))
     }
 }
 

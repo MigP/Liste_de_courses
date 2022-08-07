@@ -12,7 +12,7 @@ import java.util.List;
 import be.bf.android.listedecourses.models.entities.Categories;
 
 public class CategoriesDAO {
-    public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProd VARCHAR(15) NOT NULL)";
+    public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProdFr VARCHAR(15) NOT NULL, categorieProdEn VARCHAR(15) NOT NULL, imageSrc VARCHAR(10) UNIQUE NOT NULL)";
     public static final String UPGRADE_QUERY = "DROP TABLE categories;";
 
     private DbHelper helper;
@@ -33,7 +33,9 @@ public class CategoriesDAO {
     @SuppressLint("Range")
     public Categories getCategoriesfromCursor(Cursor cursor) {
         Categories categories = new Categories();
-        categories.setCategorieProd(cursor.getString(cursor.getColumnIndex("categorieProd")));
+        categories.setCategorieProdFr(cursor.getString(cursor.getColumnIndex("categorieProdFr")));
+        categories.setCategorieProdEn(cursor.getString(cursor.getColumnIndex("categorieProdEn")));
+        categories.setImageSrc(cursor.getString(cursor.getColumnIndex("imageSrc")));
 
         return categories;
     }
@@ -68,14 +70,18 @@ public class CategoriesDAO {
 
     public long insert(Categories categories) {
         ContentValues cv = new ContentValues();
-        cv.put("categorieProd", categories.getCategorieProd());
+        cv.put("categorieProdFr", categories.getCategorieProdFr());
+        cv.put("categorieProdEn", categories.getCategorieProdEn());
+        cv.put("imageSrc", categories.getImageSrc());
 
         return this.database.insert("categories", null, cv);
     }
 
     public int update(int id, Categories categories) {
         ContentValues cv = new ContentValues();
-        cv.put("categorieProd", categories.getCategorieProd());
+        cv.put("categorieProdFr", categories.getCategorieProdFr());
+        cv.put("categorieProdEn", categories.getCategorieProdEn());
+        cv.put("imageSrc", categories.getImageSrc());
 
         return this.database.update("categories", cv, "id = ?", new String[]{String.valueOf(id)});
     }

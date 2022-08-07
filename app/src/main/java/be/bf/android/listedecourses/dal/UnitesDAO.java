@@ -12,7 +12,7 @@ import java.util.List;
 import be.bf.android.listedecourses.models.entities.Unites;
 
 public class UnitesDAO {
-    public static final String CREATE_QUERY = "CREATE TABLE unites(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, unit VARCHAR(6) NOT NULL DEFAULT 'Unités')";
+    public static final String CREATE_QUERY = "CREATE TABLE unites(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, unitFr VARCHAR(6) NOT NULL DEFAULT 'Unités', unitEn VARCHAR(6) NOT NULL DEFAULT 'Units')";
     public static final String UPGRADE_QUERY = "DROP TABLE unites;";
 
     private DbHelper helper;
@@ -33,8 +33,8 @@ public class UnitesDAO {
     @SuppressLint("Range")
     public Unites getUnitesfromCursor(Cursor cursor) {
         Unites unites = new Unites();
-        unites.setUnit(cursor.getString(cursor.getColumnIndex("unit")));
-
+        unites.setUnitFr(cursor.getString(cursor.getColumnIndex("unitFr")));
+        unites.setUnitEn(cursor.getString(cursor.getColumnIndex("unitEn")));
         return unites;
     }
 
@@ -68,14 +68,16 @@ public class UnitesDAO {
 
     public long insert(Unites unites) {
         ContentValues cv = new ContentValues();
-        cv.put("unit", unites.getUnit());
+        cv.put("unitFr", unites.getUnitFr());
+        cv.put("unitEn", unites.getUnitEn());
 
         return this.database.insert("unites", null, cv);
     }
 
     public int update(int id, Unites unites) {
         ContentValues cv = new ContentValues();
-        cv.put("unit", unites.getUnit());
+        cv.put("unitFr", unites.getUnitFr());
+        cv.put("unitEn", unites.getUnitEn());
 
         return this.database.update("unites", cv, "id = ?", new String[]{String.valueOf(id)});
     }

@@ -1,28 +1,40 @@
 package be.bf.android.listedecourses.models.entities;
 
 public class Unites {
-    private String unit;
+    private String unitFr;
+    private String unitEn;
 
     public Unites() {
     }
 
-    public Unites(String unit) {
-        this.unit = unit;
+    public Unites(String unitFr, String unitEn) {
+        this.unitFr = unitFr;
+        this.unitEn = unitEn;
     }
 
     @Override
     public String toString() {
         return "Unites{" +
-                "unit='" + unit + '\'' +
+                "unitFr='" + unitFr + '\'' +
+                ", unitEn='" + unitEn + '\'' +
                 '}';
     }
 
-    public String getUnit() {
-        return unit;
+    public String getUnitFr() {
+        return unitFr;
     }
 
-    public Unites setUnit(String unit) {
-        this.unit = unit;
+    public Unites setUnitFr(String unitFr) {
+        this.unitFr = unitFr;
+        return this;
+    }
+
+    public String getUnitEn() {
+        return unitEn;
+    }
+
+    public Unites setUnitEn(String unitEn) {
+        this.unitEn = unitEn;
         return this;
     }
 }
