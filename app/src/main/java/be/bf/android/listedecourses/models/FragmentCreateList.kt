@@ -13,6 +13,7 @@ import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
@@ -30,7 +31,6 @@ class FragmentCreateList : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_create_list, container, false)
 
         val addCategoriesBtn: Button = v.findViewById(R.id.addCategoriesBtn)
@@ -59,23 +59,12 @@ class FragmentCreateList : Fragment() {
 
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
-                    println("--------------------- " + listOfUnits.get(i))
                     selectedUnit = i
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
                 }
 
             }
-
-        // --- TEST --- creates new product object:
-            newProduct = ListeCourses()
-                .setProduit("apple")
-                .setQuantite(2)
-                .setUniteId(7)
-                .setCategorieProdId1(1)
-                .setCategorieProdId2(0)
-                .setCategorieProdId3(0)
-                .setAchete(0)
 
         return v
     }
@@ -105,48 +94,58 @@ class FragmentCreateList : Fragment() {
 //            newProduct.setAchete(1)
 //            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
 
-        // Creating the dialog
-        val dialogbuider = AlertDialog.Builder(requireContext())
-        dialogbuider.setCancelable(false)
-        dialogbuider.setTitle("Pick up to 3 categories")
+        // Creating the alert dialog with the categories to be selected
+            val dialogbuider = AlertDialog.Builder(requireContext())
+            var checkedItemsCounter = 0
+            dialogbuider.setCancelable(false)
+            dialogbuider.setTitle("Pick up to 3 categories")
 
-        val catListIterator = listOfCategories.nameList.iterator()
-        var counter = 0
-        val catListArrayList: ArrayList<Category> = ArrayList()
+            val catListIterator = listOfCategories.nameList.iterator()
+            var counter = 0
+            val catListArrayList: ArrayList<Category> = ArrayList()
 
-        while(catListIterator.hasNext()){
-            val entry = catListIterator.next()
+            while(catListIterator.hasNext()){
+                catListIterator.next()
 
-            catListArrayList.add(Category(listOfCategories.getName(counter), listOfCategories.getImage(counter), listOfCategories.getIsSelected(counter)))
-            counter++
-        }
-
-        val categoriesListAdapter = CategoriesListAdapter(catListArrayList, requireContext(), object : CategoriesListInterface {
-            override fun onItemChecked(position: Int) {
-                catListArrayList.get(position)
-                    .isSelected = !catListArrayList.get(position).isSelected
+                catListArrayList.add(Category(listOfCategories.getName(counter), listOfCategories.getImage(counter), listOfCategories.getIsSelected(counter)))
+                counter++
             }
-        })
 
-        dialogbuider.setAdapter(
-            categoriesListAdapter
-        ) { dialog: DialogInterface?, which: Int -> }
+            val categoriesListAdapter = CategoriesListAdapter(catListArrayList, requireContext(), object : CategoriesListInterface {
+                override fun onItemChecked(position: Int) {
+                    if (checkedItemsCounter > 2) {
+                        println("*************** " + checkedItemsCounter)
 
-        dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
-            val itensexib2 = StringBuilder()
-            selectedItemsList.clear()
-            for (item in catListArrayList) {
-                if (item.isSelected) {
-                    println("***************** " + item.name)
+//TODO Prevent user from selecting more than 3 items!!!!
+                        requireView().findViewById<CheckBox>(R.id.chkbox_categoriesList)?.isChecked = false
+                    } else {
+                        checkedItemsCounter++
+                        catListArrayList.get(position)
+                            .isSelected = !catListArrayList.get(position).isSelected
+                    }
+                }
+            })
+
+
+
+            dialogbuider.setAdapter(
+                categoriesListAdapter
+            ) { dialog: DialogInterface?, which: Int -> }
+
+            dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
+                selectedItemsList.clear()
+                for (item in catListArrayList) {
+                    if (item.isSelected) {
+                        println("***************** " + item.name)
+                    }
                 }
             }
-        }
 
-        val dialog = dialogbuider.create()
-        val listView = dialog.listView
-        listView.divider = ColorDrawable(Color.GRAY)
-        listView.dividerHeight = 2
-        dialog.show()
+            val dialog = dialogbuider.create()
+            val listView = dialog.listView
+            listView.divider = ColorDrawable(Color.GRAY)
+            listView.dividerHeight = 2
+            dialog.show()
     }
 
     private fun addProduct(view: View) {
