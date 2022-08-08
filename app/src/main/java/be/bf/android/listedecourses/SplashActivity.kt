@@ -133,7 +133,7 @@ class SplashActivity : AppCompatActivity() {
         showListsIntent.putExtra("targetFragment", "show")
         startActivity(showListsIntent)
 
-//       initialPopulateDb()
+//        initialPopulateDb()
 //        val listeCoursesDAO = ListeCoursesDAO(this)
 //        listeCoursesDAO.openWritable()
 //        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
@@ -162,7 +162,7 @@ class SplashActivity : AppCompatActivity() {
             categoriesDAO.insert(Categories("Viande", "Meat", "pork_leg"))
             categoriesDAO.insert(Categories("Poissons et crustacés", "Fish and shellfish", "seafood"))
             categoriesDAO.insert(Categories("Produits laitiers", "Dairy products", "dairy_products"))
-            categoriesDAO.insert(Categories("Condiments et épices", "Condiments and spices", "salt_and_peper"))
+            categoriesDAO.insert(Categories("Condiments et épices", "Condiments and spices", "salt_and_pepper"))
             categoriesDAO.insert(Categories("Sauces et huiles", "Sauces and oils", "sauce_bottle"))
             categoriesDAO.insert(Categories("Snacks", "Snacks","snack"))
             categoriesDAO.insert(Categories("Pain et boulangerie", "Bread and bakery", "breads"))

@@ -1,6 +1,9 @@
 package be.bf.android.listedecourses.models
 
-import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -8,11 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
@@ -81,6 +81,7 @@ class FragmentCreateList : Fragment() {
     }
 
     companion object {
+        var selectedItemsList: ArrayList<String> = ArrayList()
         lateinit var listOfCategories: ListOfCategories
         lateinit var listOfUnits: ArrayList<String>
         var selectedUnit: Int = 0
@@ -95,45 +96,57 @@ class FragmentCreateList : Fragment() {
     private fun addCategories(view: View) {
         //TODO create an alert window with a checklist of the categories
 
-        // --- TEST --- Changes an image src:
-            val img: ImageView? = getView()?.findViewById(R.id.iv_cat1)
-            img!!.setImageResource(listOfCategories.getImage(10))
-
-        // --- TEST --- Reads info:
-            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
-            newProduct.setAchete(1)
-            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
-
-//        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(context)
+//        // --- TEST --- Changes an image src:
+//            val img: ImageView? = getView()?.findViewById(R.id.iv_cat1)
+//            img!!.setImageResource(listOfCategories.getImage(10))
 //
-//        alertDialog.setTitle("Choose up to 3 categories:");
-//        var counter = 0
-//        alertDialog.setMultiChoiceItems(listCategories.nameList.toTypedArray() , listCategories.isSelectedList.toBooleanArray()) { dialog, which, isChecked ->
-//            if (isChecked && counter >= 2) {
-//                listCategories.isSelectedList[which] = false
-//                (dialog as AlertDialog).listView.setItemChecked(which, false)
-//            } else {
-//                if (isChecked) {
-//                    listCategories.isSelectedList[which] = true
-//                    counter++
-//                } else {
-//                    listCategories.isSelectedList[which] = false
-//                    counter--
-//                }
-//            }
-//            println("----------------- which: " + which + "\n----------------- counter: " + counter + "\n----------------- item: " + listCategories.nameList[which] + "\n----------------- item checked: " + listCategories.isSelectedList[which].toString())
-//        }
-//        val alert: AlertDialog = alertDialog.create();
-//        alert.setCanceledOnTouchOutside(false);
-//        alert.setButton("Done") { dialogInterface, i ->
-//            alert.cancel();
-//        }
-//
-//        alert.show()
+//        // --- TEST --- Reads info:
+//            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
+//            newProduct.setAchete(1)
+//            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
 
+        // Creating the dialog
+        val dialogbuider = AlertDialog.Builder(requireContext())
+        dialogbuider.setCancelable(false)
+        dialogbuider.setTitle("Pick up to 3 categories")
 
+        val catListIterator = listOfCategories.nameList.iterator()
+        var counter = 0
+        val catListArrayList: ArrayList<Category> = ArrayList()
 
+        while(catListIterator.hasNext()){
+            val entry = catListIterator.next()
 
+            catListArrayList.add(Category(listOfCategories.getName(counter), listOfCategories.getImage(counter), listOfCategories.getIsSelected(counter)))
+            counter++
+        }
+
+        val categoriesListAdapter = CategoriesListAdapter(catListArrayList, requireContext(), object : CategoriesListInterface {
+            override fun onItemChecked(position: Int) {
+                catListArrayList.get(position)
+                    .isSelected = !catListArrayList.get(position).isSelected
+            }
+        })
+
+        dialogbuider.setAdapter(
+            categoriesListAdapter
+        ) { dialog: DialogInterface?, which: Int -> }
+
+        dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
+            val itensexib2 = StringBuilder()
+            selectedItemsList.clear()
+            for (item in catListArrayList) {
+                if (item.isSelected) {
+                    println("***************** " + item.name)
+                }
+            }
+        }
+
+        val dialog = dialogbuider.create()
+        val listView = dialog.listView
+        listView.divider = ColorDrawable(Color.GRAY)
+        listView.dividerHeight = 2
+        dialog.show()
     }
 
     private fun addProduct(view: View) {
@@ -199,30 +212,6 @@ class FragmentCreateList : Fragment() {
             }
 
         return ListOfCategories(categoriesArrayList, imagesArrayList, isSelectedArrayList)
-    }
-
-    class ListOfCategories(val _nameList: ArrayList<String>, val _imageList: ArrayList<Int>, var _isSelectedList: ArrayList<Boolean>) {
-        val nameList: ArrayList<String>
-        val imageList: ArrayList<Int>
-        val isSelectedList: ArrayList<Boolean>
-
-        init {
-            nameList = _nameList
-            imageList = _imageList
-            isSelectedList = _isSelectedList
-        }
-
-        fun getName(index: Int): String {
-            return nameList.get(index)
-        }
-
-        fun getImage(index: Int): Int {
-            return imageList.get(index)
-        }
-
-        fun getIsSelected(index: Int): Boolean {
-            return isSelectedList.get(index)
-        }
     }
 
     private fun getUnits(): ArrayList<String> { // Gets units from the database and puts them into an ArrayList
