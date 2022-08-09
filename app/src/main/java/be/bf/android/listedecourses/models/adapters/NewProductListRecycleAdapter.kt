@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.models.entities.ListeCourses
@@ -80,6 +81,12 @@ class NewProductListRecycleAdapter: RecyclerView.Adapter<NewProductListRecycleAd
             newProdCat2Img = itemView.findViewById(R.id.newProdCat2Img)
             newProdCat3Img = itemView.findViewById(R.id.newProdCat3Img)
             newProdChkBox = itemView.findViewById(R.id.newProdChkBx)
+
+            itemView.setOnClickListener {
+                val position: Int = adapterPosition
+
+                Toast.makeText(itemView.context, "You have clicked on item #${entries.get(position).produit}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
