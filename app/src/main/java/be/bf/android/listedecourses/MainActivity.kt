@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import be.bf.android.listedecourses.databinding.ActivityMainBinding
-import be.bf.android.listedecourses.models.FragmentCreateList
-import be.bf.android.listedecourses.models.FragmentShowList
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList
+import be.bf.android.listedecourses.models.fragments.FragmentShowList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -55,13 +55,13 @@ class MainActivity : AppCompatActivity() {
         binding.createListFloatingActionButton.setOnClickListener(this::createList)
     }
 
-    fun createList(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+    fun createList(view: View) { // Refreshes the main activity and sends the relevant extra in intent so that the create list fragment is visible
         val createListIntent = Intent(this, MainActivity::class.java)
         createListIntent.putExtra("targetFragment", "create")
         startActivity(createListIntent)
     }
 
-    fun showLists(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+    fun showLists(view: View) { // Refreshes the main activity and sends the relevant extra in intent so that the show lists fragment is visible
         val showListsIntent = Intent(this, MainActivity::class.java)
         showListsIntent.putExtra("targetFragment", "show")
         startActivity(showListsIntent)

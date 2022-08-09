@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/newProdsListCardView"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="#E3F7FF"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:contentPadding="4dp">
+
+    <LinearLayout
+        android:id="@+id/new_prods_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="15">
+
+        <TextView
+            android:id="@+id/tv_newProdQty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="25"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_newProdUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="kg"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_newProdName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:text="tv_newProdName"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/newProdCat1Img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/none_icon"
+            android:layout_weight="1"
+            android:layout_gravity="center" />
+
+        <ImageView
+            android:id="@+id/newProdCat2Img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:src="@drawable/none_icon"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
+
+        <ImageView
+            android:id="@+id/newProdCat3Img"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:src="@drawable/none_icon"
+            android:layout_weight="1"
+            android:adjustViewBounds="true" />
+
+        <CheckBox
+            android:id="@+id/newProdChkBx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,4 +1,4 @@
-package be.bf.android.listedecourses.models
+package be.bf.android.listedecourses.models.entities
 
 class Category (var name: String, var icon: Int, var isSelected: Boolean) {
 

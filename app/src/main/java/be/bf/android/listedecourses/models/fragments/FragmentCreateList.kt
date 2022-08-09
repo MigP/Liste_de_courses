@@ -1,9 +1,7 @@
-package be.bf.android.listedecourses.models
+package be.bf.android.listedecourses.models.fragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
@@ -11,19 +9,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
+import be.bf.android.listedecourses.models.CategoriesListInterface
+import be.bf.android.listedecourses.models.entities.Category
+import be.bf.android.listedecourses.models.adapters.CategoriesListAdapter
+import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
 import be.bf.android.listedecourses.models.entities.Categories
 import be.bf.android.listedecourses.models.entities.ListeCourses
 import be.bf.android.listedecourses.models.entities.Unites
 
 
 class FragmentCreateList : Fragment() {
+    private var newProdListLayoutManager: RecyclerView.LayoutManager? = null
+    private var newProdListAdapter: RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -47,36 +52,39 @@ class FragmentCreateList : Fragment() {
         listOfCategories = getProductCategories()
         listOfUnits = getUnits()
 
+        newProdListLayoutManager = LinearLayoutManager(requireContext())
+        val recyclerView = v.findViewById<RecyclerView>(R.id.create_list_recycler)
+        recyclerView.layoutManager = newProdListLayoutManager
+        newProdListAdapter = NewProductListRecycleAdapter()
+        recyclerView.adapter = newProdListAdapter
+
         // Create dropdown menu with units to choose from
             val spinner: Spinner =  v.findViewById(R.id.unitsDropdown);
-            val adapter: ArrayAdapter<*> = ArrayAdapter<Any>(
+            val adapter: ArrayAdapter<*> = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 getUnits() as List<Any>
             )
+
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
             spinner.adapter = adapter
-
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
                     selectedUnit = i
                 }
                 override fun onNothingSelected(adapterView: AdapterView<*>) {
                 }
-
             }
 
         return v
     }
 
     companion object {
-        var selectedItemsList: ArrayList<String> = ArrayList()
         var selectedCategoriesCounter = 0
-        lateinit var listOfCategories: ArrayList<Category>
-        lateinit var listOfUnits: ArrayList<String>
         var selectedUnit: Int = 0
-        lateinit var newProduct: ListeCourses
+        var listOfCategories = ArrayList<Category>()
+        var listOfUnits = ArrayList<String>()
+        var newProduct = ListeCourses()
 
         @JvmStatic
         fun newInstance() =
@@ -84,13 +92,14 @@ class FragmentCreateList : Fragment() {
             }
     }
 
-    private fun addCategories(view: View) {
+    private fun addCategories(view: View) { // Adds up to 3 categories to the product being created by the user
         // Creating the alert dialog with the categories to be selected
             val dialogbuider = AlertDialog.Builder(requireContext())
             dialogbuider.setCancelable(false)
             dialogbuider.setTitle("Pick up to 3 categories")
 
-            val categoriesListAdapter = CategoriesListAdapter(listOfCategories, requireContext(), object : CategoriesListInterface {
+            val categoriesListAdapter = CategoriesListAdapter(listOfCategories, requireContext(), object :
+                CategoriesListInterface {
                 override fun onItemChecked(position: Int) {
                 }
             })
@@ -98,29 +107,30 @@ class FragmentCreateList : Fragment() {
             dialogbuider.setAdapter(categoriesListAdapter) { dialog: DialogInterface?, which: Int -> }
 
             dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
-                var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
-                changeImg(requireView().findViewById(R.id.iv_cat1), resID)
-                changeImg(requireView().findViewById(R.id.iv_cat2), resID)
-                changeImg(requireView().findViewById(R.id.iv_cat3), resID)
+                // Resetting the 3 selected category images
+                    var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
+                    changeImg(requireView().findViewById(R.id.iv_cat1), resID)
+                    changeImg(requireView().findViewById(R.id.iv_cat2), resID)
+                    changeImg(requireView().findViewById(R.id.iv_cat3), resID)
 
-                var imgToChangeCounter = 1
-                selectedItemsList.clear()
-                for (item in listOfCategories) {
-                    if (item.isSelected) {
-                        when (imgToChangeCounter) {
-                            1 -> {
-                                changeImg(requireView().findViewById(R.id.iv_cat1), item.icon)
+                // Changes the selected category images to the relevant image resources
+                    var imgToChangeCounter = 1
+                    for (item in listOfCategories) {
+                        if (item.isSelected) {
+                            when (imgToChangeCounter) {
+                                1 -> {
+                                    changeImg(requireView().findViewById(R.id.iv_cat1), item.icon)
+                                }
+                                2 -> {
+                                    changeImg(requireView().findViewById(R.id.iv_cat2), item.icon)
+                                }
+                                3 -> {
+                                    changeImg(requireView().findViewById(R.id.iv_cat3), item.icon)
+                                }
                             }
-                            2 -> {
-                                changeImg(requireView().findViewById(R.id.iv_cat2), item.icon)
-                            }
-                            3 -> {
-                                changeImg(requireView().findViewById(R.id.iv_cat3), item.icon)
-                            }
+                            imgToChangeCounter++
                         }
-                        imgToChangeCounter++
                     }
-                }
             }
 
             val dialog = dialogbuider.create()
@@ -128,7 +138,7 @@ class FragmentCreateList : Fragment() {
             dialog.show()
     }
 
-    private fun addProduct(view: View) {
+    private fun addProduct(view: View) { // Adds the created product to the list being created
         //TODO validate product data and insert it into the recycler adapter
 
         // Sets the created product name
@@ -146,10 +156,32 @@ class FragmentCreateList : Fragment() {
         // Sets the created product unit
             newProduct!!.setUniteId(selectedUnit)
 
-        Toast.makeText(requireContext(), "" + newProduct.quantite + " " + listOfUnits.get(newProduct.uniteId) + " of " + newProduct.produit, Toast.LENGTH_SHORT).show()
+        // Creates an ArrayList containing the names of the selected categories for this product
+            // Fills up catsSel with the selected categories names
+                val catsSel = ArrayList<String>()
+                var counter = 0
+                for (item in listOfCategories) {
+                    if (item.isSelected) {
+                        catsSel.add(item.name)
+                    }
+                }
+            // Fills up the remainder of catsSel with empty categories names (N/A)
+                if (catsSel.isEmpty()) {
+                    catsSel.add("N/A")
+                }
+                if (catsSel.size == 1) {
+                    catsSel.add("N/A")
+                }
+                if (catsSel.size == 2) {
+                    catsSel.add("N/A")
+                }
+
+        println("----------------- ADDED: " + newProduct.quantite.toString() + " " + listOfUnits.get(
+            newProduct.uniteId) + " " + newProduct.produit.toString())
+        println("-------------Categories: " + catsSel.get(0) + ", " + catsSel.get(1) + ", " + catsSel.get(2))
     }
 
-    private fun cancelCreate(view: View) {
+    private fun cancelCreate(view: View) { // Closes the alert dialog box
         setFragmentResult("requestKey", bundleOf("createFragmentData" to "cancelCreate"))
     }
 
@@ -157,10 +189,8 @@ class FragmentCreateList : Fragment() {
         //TODO validate all items present and create new list
     }
 
-    private fun getProductCategories(): ArrayList<Category> { // Gets product categories from the database and puts them into a ListCategories object
+    private fun getProductCategories(): ArrayList<Category> { // Gets product categories from the database and returns them in an ArrayList of Category objects
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = prefs.edit()
-
         val categoriesArrayList = ArrayList<String>()
         val imagesArrayList = ArrayList<Int>()
         val isSelectedArrayList = ArrayList<Boolean>()
@@ -191,23 +221,21 @@ class FragmentCreateList : Fragment() {
             }
 
         // Creates ArrayList of Category objects
-        val _listOfCategories = ArrayList<Category>()
-        val listOfCategoriesIterator = categoriesArrayList.iterator()
-        var counter = 0
-        while(listOfCategoriesIterator.hasNext()){
-            listOfCategoriesIterator.next()
+            val _listOfCategories = ArrayList<Category>()
+            val listOfCategoriesIterator = categoriesArrayList.iterator()
+            var counter = 0
+            while(listOfCategoriesIterator.hasNext()){
+                listOfCategoriesIterator.next()
 
-            _listOfCategories.add(Category(categoriesArrayList.get(counter), imagesArrayList.get(counter), isSelectedArrayList.get(counter)))
-            counter++
-        }
+                _listOfCategories.add(Category(categoriesArrayList.get(counter), imagesArrayList.get(counter), isSelectedArrayList.get(counter)))
+                counter++
+            }
 
         return _listOfCategories
     }
 
     private fun getUnits(): ArrayList<String> { // Gets units from the database and puts them into an ArrayList
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = prefs.edit()
-
         val unitsArrayList = ArrayList<String>()
 
         val unitesDAO = UnitesDAO(context)
@@ -227,7 +255,7 @@ class FragmentCreateList : Fragment() {
         return unitsArrayList
     }
 
-    private fun changeImg(targetImg: ImageView, imgResourceId: Int) {
+    private fun changeImg(targetImg: ImageView, imgResourceId: Int) { // Changes the source of a given image
         targetImg.setImageResource(imgResourceId)
     }
 }

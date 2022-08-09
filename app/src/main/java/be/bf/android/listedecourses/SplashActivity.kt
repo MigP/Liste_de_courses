@@ -48,8 +48,13 @@ class SplashActivity : AppCompatActivity() {
 
         // Set the correct language according to preferences, dealing with language codes of regional variations (en_gb, en_us, ...)
             if (getResources().getConfiguration().locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
-                setLanguage(prefs.getString("language", "")!!)
+                setLanguage(prefs.getString("language", "")!!) // <---- This refreshes the activity!!!
             }
+
+        // Detect if the database exists and create it with the default values if it doesn't
+            val unitesDAO = UnitesDAO(this)
+            unitesDAO.openReadable()
+            if (unitesDAO.findAll().size == 0) initialiseDb()
 
         // Splash title fade in
             val splashTitle: TextView = findViewById<View>(R.id.tv_splashTitle) as TextView
@@ -77,8 +82,6 @@ class SplashActivity : AppCompatActivity() {
 
         binding.showListsBtn.setOnClickListener(this::showLists)
         binding.createListBtn.setOnClickListener(this::createList)
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu
@@ -109,7 +112,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun setLanguage(lang: String) { // Function that sets the locale and restarts the activity
+    fun setLanguage(lang: String) { // Function that sets the locale and refreshes the activity
         val myLocale = Locale(lang)
         val res = resources
         val dm = res.displayMetrics
@@ -132,15 +135,9 @@ class SplashActivity : AppCompatActivity() {
         val showListsIntent = Intent(this, MainActivity::class.java)
         showListsIntent.putExtra("targetFragment", "show")
         startActivity(showListsIntent)
-
-//        initialPopulateDb()
-//        val listeCoursesDAO = ListeCoursesDAO(this)
-//        listeCoursesDAO.openWritable()
-//        listeCoursesDAO.insert(ListeCourses(1, "Apples", 8, 7, 1, 2, 3, 0))
-//        println(listeCoursesDAO.toString())
     }
 
-    fun initialPopulateDb() {
+    fun initialiseDb() {
         // Populate Table unites
             val unitesDAO = UnitesDAO(this)
             unitesDAO.openWritable()

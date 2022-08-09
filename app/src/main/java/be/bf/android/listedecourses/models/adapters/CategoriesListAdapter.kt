@@ -1,13 +1,15 @@
-package be.bf.android.listedecourses.models
+package be.bf.android.listedecourses.models.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContentProviderCompat.requireContext
 import be.bf.android.listedecourses.R
-import be.bf.android.listedecourses.models.FragmentCreateList.Companion.selectedCategoriesCounter
+import be.bf.android.listedecourses.models.CategoriesListInterface
+import be.bf.android.listedecourses.models.entities.Category
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.selectedCategoriesCounter
 
 
 class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, private var context: Context, var categoriesListInterface: CategoriesListInterface):
@@ -38,10 +40,10 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
         }
 
 
-        val categoriesListImg: ImageView? = convertView!!.findViewById(R.id.categoriesListImg)
-        categoriesListImg!!.setImageResource(listOfCategories.get(position).icon)
+        val categoriesListImg: ImageView = convertView!!.findViewById(R.id.categoriesListImg)
+        categoriesListImg.setImageResource(listOfCategories.get(position).icon)
 
-        val tv_categoriesList: TextView = convertView!!.findViewById(R.id.tv_categoriesList)
+        val tv_categoriesList: TextView = convertView.findViewById(R.id.tv_categoriesList)
         tv_categoriesList.text = listOfCategories.get(position).name
 
         val checkbox: CheckBox = convertView.findViewById<CheckBox>(R.id.chkbox_categoriesList)

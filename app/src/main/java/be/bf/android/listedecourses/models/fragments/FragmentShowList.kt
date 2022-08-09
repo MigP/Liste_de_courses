@@ -1,15 +1,12 @@
-package be.bf.android.listedecourses.models
+package be.bf.android.listedecourses.models.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
-import be.bf.android.listedecourses.models.entities.Categories
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class FragmentShowList : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

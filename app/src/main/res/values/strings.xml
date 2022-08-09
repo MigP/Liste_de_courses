@@ -3,4 +3,6 @@
     <string name="my_lists">Show my lists</string>
     <string name="create_list">Create a list</string>
     <string name="your_shopping_lists">Your shopping lists</string>
+    <string name="categories"><![CDATA[+ Categories ->]]></string>
+    <string name="create">Create list</string>
 </resources>
