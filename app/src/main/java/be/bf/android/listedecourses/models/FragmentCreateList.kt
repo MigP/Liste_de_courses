@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.RecyclerView
@@ -71,7 +72,8 @@ class FragmentCreateList : Fragment() {
 
     companion object {
         var selectedItemsList: ArrayList<String> = ArrayList()
-        lateinit var listOfCategories: ListOfCategories
+        var selectedCategoriesCounter = 0
+        lateinit var listOfCategories: ArrayList<Category>
         lateinit var listOfUnits: ArrayList<String>
         var selectedUnit: Int = 0
         lateinit var newProduct: ListeCourses
@@ -83,68 +85,46 @@ class FragmentCreateList : Fragment() {
     }
 
     private fun addCategories(view: View) {
-        //TODO create an alert window with a checklist of the categories
-
-//        // --- TEST --- Changes an image src:
-//            val img: ImageView? = getView()?.findViewById(R.id.iv_cat1)
-//            img!!.setImageResource(listOfCategories.getImage(10))
-//
-//        // --- TEST --- Reads info:
-//            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
-//            newProduct.setAchete(1)
-//            println("----------------- newProduct: " + newProduct.produit.toString() + " , Acheté: " + newProduct.achete.toString())
-
         // Creating the alert dialog with the categories to be selected
             val dialogbuider = AlertDialog.Builder(requireContext())
-            var checkedItemsCounter = 0
             dialogbuider.setCancelable(false)
             dialogbuider.setTitle("Pick up to 3 categories")
 
-            val catListIterator = listOfCategories.nameList.iterator()
-            var counter = 0
-            val catListArrayList: ArrayList<Category> = ArrayList()
-
-            while(catListIterator.hasNext()){
-                catListIterator.next()
-
-                catListArrayList.add(Category(listOfCategories.getName(counter), listOfCategories.getImage(counter), listOfCategories.getIsSelected(counter)))
-                counter++
-            }
-
-            val categoriesListAdapter = CategoriesListAdapter(catListArrayList, requireContext(), object : CategoriesListInterface {
+            val categoriesListAdapter = CategoriesListAdapter(listOfCategories, requireContext(), object : CategoriesListInterface {
                 override fun onItemChecked(position: Int) {
-                    if (checkedItemsCounter > 2) {
-                        println("*************** " + checkedItemsCounter)
-
-//TODO Prevent user from selecting more than 3 items!!!!
-                        requireView().findViewById<CheckBox>(R.id.chkbox_categoriesList)?.isChecked = false
-                    } else {
-                        checkedItemsCounter++
-                        catListArrayList.get(position)
-                            .isSelected = !catListArrayList.get(position).isSelected
-                    }
                 }
             })
 
-
-
-            dialogbuider.setAdapter(
-                categoriesListAdapter
-            ) { dialog: DialogInterface?, which: Int -> }
+            dialogbuider.setAdapter(categoriesListAdapter) { dialog: DialogInterface?, which: Int -> }
 
             dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
+                var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
+                changeImg(requireView().findViewById(R.id.iv_cat1), resID)
+                changeImg(requireView().findViewById(R.id.iv_cat2), resID)
+                changeImg(requireView().findViewById(R.id.iv_cat3), resID)
+
+                var imgToChangeCounter = 1
                 selectedItemsList.clear()
-                for (item in catListArrayList) {
+                for (item in listOfCategories) {
                     if (item.isSelected) {
-                        println("***************** " + item.name)
+                        when (imgToChangeCounter) {
+                            1 -> {
+                                changeImg(requireView().findViewById(R.id.iv_cat1), item.icon)
+                            }
+                            2 -> {
+                                changeImg(requireView().findViewById(R.id.iv_cat2), item.icon)
+                            }
+                            3 -> {
+                                changeImg(requireView().findViewById(R.id.iv_cat3), item.icon)
+                            }
+                        }
+                        imgToChangeCounter++
                     }
                 }
             }
 
             val dialog = dialogbuider.create()
             val listView = dialog.listView
-            listView.divider = ColorDrawable(Color.GRAY)
-            listView.dividerHeight = 2
             dialog.show()
     }
 
@@ -177,7 +157,7 @@ class FragmentCreateList : Fragment() {
         //TODO validate all items present and create new list
     }
 
-    private fun getProductCategories(): ListOfCategories { // Gets product categories from the database and puts them into a ListCategories object
+    private fun getProductCategories(): ArrayList<Category> { // Gets product categories from the database and puts them into a ListCategories object
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val editor = prefs.edit()
 
@@ -210,7 +190,18 @@ class FragmentCreateList : Fragment() {
                 isSelectedArrayList.add(false)
             }
 
-        return ListOfCategories(categoriesArrayList, imagesArrayList, isSelectedArrayList)
+        // Creates ArrayList of Category objects
+        val _listOfCategories = ArrayList<Category>()
+        val listOfCategoriesIterator = categoriesArrayList.iterator()
+        var counter = 0
+        while(listOfCategoriesIterator.hasNext()){
+            listOfCategoriesIterator.next()
+
+            _listOfCategories.add(Category(categoriesArrayList.get(counter), imagesArrayList.get(counter), isSelectedArrayList.get(counter)))
+            counter++
+        }
+
+        return _listOfCategories
     }
 
     private fun getUnits(): ArrayList<String> { // Gets units from the database and puts them into an ArrayList
@@ -234,5 +225,9 @@ class FragmentCreateList : Fragment() {
             }
 
         return unitsArrayList
+    }
+
+    private fun changeImg(targetImg: ImageView, imgResourceId: Int) {
+        targetImg.setImageResource(imgResourceId)
     }
 }

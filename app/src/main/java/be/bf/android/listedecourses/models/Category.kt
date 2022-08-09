@@ -7,16 +7,4 @@ class Category (var name: String, var icon: Int, var isSelected: Boolean) {
         this.icon = icon
         this.isSelected = isSelected
     }
-
-//    fun getName(): String {
-//        return this.name
-//    }
-//
-//    fun getIcon(): Int {
-//        return this.icon
-//    }
-//
-//    fun getIsSelected(): Boolean {
-//        return this.isSelected
-//    }
 }

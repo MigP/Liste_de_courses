@@ -4,14 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.core.content.ContentProviderCompat.requireContext
 import be.bf.android.listedecourses.R
+import be.bf.android.listedecourses.models.FragmentCreateList.Companion.selectedCategoriesCounter
 
 
-class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, private var context: Context, private var categoriesListInterface: CategoriesListInterface):
+class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, private var context: Context, var categoriesListInterface: CategoriesListInterface):
     BaseAdapter() {
 
     init {
@@ -19,16 +18,17 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
         this.context = context;
         this.categoriesListInterface = categoriesListInterface;
     }
+
     override fun getCount(): Int {
         return listOfCategories.size
     }
 
     override fun getItem(position: Int): Any {
-        return Unit
+        return listOfCategories.get(position)
     }
 
     override fun getItemId(position: Int): Long {
-        return 0
+        return listOfCategories.indexOf(getItem(position)).toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
@@ -41,23 +41,49 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
         val categoriesListImg: ImageView? = convertView!!.findViewById(R.id.categoriesListImg)
         categoriesListImg!!.setImageResource(listOfCategories.get(position).icon)
 
-        val tv_categoriesList = convertView!!.findViewById(R.id.tv_categoriesList) as TextView
+        val tv_categoriesList: TextView = convertView!!.findViewById(R.id.tv_categoriesList)
         tv_categoriesList.text = listOfCategories.get(position).name
 
-        val chkbox_categoriesList = convertView!!.findViewById(R.id.chkbox_categoriesList) as CheckBox
-        chkbox_categoriesList.isChecked = listOfCategories.get(position).isSelected
-
-        val checkbox = convertView.findViewById<CheckBox>(R.id.chkbox_categoriesList)
+        val checkbox: CheckBox = convertView.findViewById<CheckBox>(R.id.chkbox_categoriesList)
         checkbox.isChecked = listOfCategories.get(position).isSelected
 
-        // When you click on the item line.
+        // Check the box when you click on the item text or icon
             convertView.setOnClickListener(View.OnClickListener { v: View? ->
-                checkbox.toggle()
-                this.categoriesListInterface.onItemChecked(position)
+
+                if (FragmentCreateList.listOfCategories.get(position).isSelected) {
+                    checkbox.toggle()
+                    FragmentCreateList.listOfCategories.get(position).isSelected = false
+                    selectedCategoriesCounter--
+
+                    this.categoriesListInterface.onItemChecked(position)
+                } else if (selectedCategoriesCounter < 3) {
+                    checkbox.toggle()
+                    FragmentCreateList.listOfCategories.get(position).isSelected = true
+                    selectedCategoriesCounter++
+
+                    this.categoriesListInterface.onItemChecked(position)
+                } else {
+                    Toast.makeText(context, "You have reached your limit", Toast.LENGTH_SHORT).show()
+                }
             })
 
-        // When you click directly on the checkbox
-            checkbox.setOnClickListener { v -> this.categoriesListInterface.onItemChecked(position) }
+        // Check the box when you click directly on the checkbox
+            checkbox.setOnClickListener { v ->
+                if (FragmentCreateList.listOfCategories.get(position).isSelected) {
+                    FragmentCreateList.listOfCategories.get(position).isSelected = false
+                    selectedCategoriesCounter--
+
+                    this.categoriesListInterface.onItemChecked(position)
+                } else if (selectedCategoriesCounter < 3) {
+                    FragmentCreateList.listOfCategories.get(position).isSelected = true
+                    selectedCategoriesCounter++
+
+                    this.categoriesListInterface.onItemChecked(position)
+                } else {
+                    checkbox.toggle()
+                    Toast.makeText(context, "You have reached your limit", Toast.LENGTH_SHORT).show()
+                }
+            }
 
         return convertView
     }
