@@ -51,6 +51,14 @@ class FragmentCreateList : Fragment() {
         listOfCategories = getProductCategories()
         listOfUnits = getUnits()
         entries.clear()
+        // Gets name and tag from the parameters passed when the fragment was instantiated
+            listName = arguments?.getString(NEW_LIST_NAME)!!
+            listTag = arguments?.getString(NEW_LIST_TAG)!!
+        // Sets the text for the titles
+            val title: TextView = v.findViewById(R.id.tv_createListTitle)
+            val subTitle: TextView = v.findViewById(R.id.tv_createListTag)
+            title.setText(listName)
+            subTitle.setText(listTag)
 
         // Creates the RecyclerView that contains the list of products
             newProdListLayoutManager = LinearLayoutManager(requireContext())
@@ -86,11 +94,24 @@ class FragmentCreateList : Fragment() {
         var listOfCategories = ArrayList<Category>()
         var listOfUnits = ArrayList<String>()
         var entries = arrayListOf<ListeCourses>()
+        var listName = ""
+        var listTag = ""
 
-        @JvmStatic
-        fun newInstance() =
-            FragmentCreateList().apply {
+        const val NEW_LIST_NAME = "newListName"
+        const val NEW_LIST_TAG = "newListTag"
+
+        fun newInstance(name: String, tag: String): FragmentCreateList {
+            val fragment = FragmentCreateList()
+
+            val bundle = Bundle().apply {
+                putString(NEW_LIST_NAME, name)
+                putString(NEW_LIST_TAG, tag)
             }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 
     private fun addCategories(view: View) { // Adds up to 3 categories to the product being created by the user
@@ -174,10 +195,8 @@ class FragmentCreateList : Fragment() {
                 val listeListes = ListeListesDAO(requireContext())
                 listeListes.openReadable()
 
-            listeListes.findLastId()
-
                 var newProduct = ListeCourses()
-                    .setListeId(listeListes.findAll().lastIndex)
+                    .setListeId(listeListes.findLastId() + 1)
                     .setQuantite(et_quantity.text.toString().toInt())
                     .setUniteId(selectedUnit)
                     .setProduit(et_productName!!.text.toString())
@@ -221,10 +240,9 @@ class FragmentCreateList : Fragment() {
             iteratorCounter++
         }
 
-        //TODO Add new list to list of lists db table --> ASK USER LIST NAME AND TAG!!!!!
         val newList = ListeListes()
-            .setListName("Test name")
-            .setListTag("Test tag")
+            .setListName(listName)
+            .setListTag(listTag)
 
         listListes.openWritable()
         listListes.insert(newList)

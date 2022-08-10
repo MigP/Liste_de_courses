@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 val transaction: FragmentTransaction = fm.beginTransaction()
 
                 transaction
-                    .add(R.id.main_fragment_frame, FragmentCreateList.newInstance())
+                    .add(R.id.main_fragment_frame, FragmentCreateList.newInstance(extra.getString("newListName")!!, extra.getString("newListTag")!!))
                     .commit()
             }
         }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/createListLayout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/tv_createListLayoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/title"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="50dp"
+        android:text="@string/create_a_list" />
+
+    <TextView
+        android:id="@+id/tv_listName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/title"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="@string/enter_a_name_for_the_list" />
+
+    <EditText
+        android:id="@+id/et_listName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="15dp"
+        android:inputType="text"
+        android:hint="@string/your_list_name" />
+
+    <TextView
+        android:id="@+id/tv_listTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/title"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="@string/enter_cat_tag" />
+
+    <EditText
+        android:id="@+id/et_listTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/your_list_tag" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createListBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/create_list" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/cancel" />
+    </LinearLayout>
+</LinearLayout>

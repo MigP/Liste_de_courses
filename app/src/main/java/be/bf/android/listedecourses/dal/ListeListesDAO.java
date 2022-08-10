@@ -69,11 +69,13 @@ public class ListeListesDAO {
 
    @SuppressLint("Range")
    public int findLastId() {
-        Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes WHERE id = ?", new String[]{"SELECT MAX(ID)"});
-        cursor.moveToNext();
-
-       System.out.println("----------------------" + cursor.getInt(cursor.getColumnIndex("id")));
-       return cursor.getInt(cursor.getColumnIndex("id"));
+        if (this.findAll().size() == 0) {
+            return 0;
+        } else {
+            Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes ORDER BY id DESC LIMIT 1", null);
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
     }
 
     public long insert(ListeListes listeListes) {
