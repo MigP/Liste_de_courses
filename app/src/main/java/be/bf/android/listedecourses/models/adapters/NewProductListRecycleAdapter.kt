@@ -12,38 +12,8 @@ import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.models.entities.ListeCourses
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.listOfUnits
 
-class NewProductListRecycleAdapter: RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>() {
-
-    // ------------ TEST -------------------
-    var newProduct1 = ListeCourses()
-        .setQuantite(500)
-        .setUniteId(1)
-        .setProduit("peanut butter jelly")
-        .setCategorieProdId1(R.drawable.apple)
-        .setCategorieProdId2(R.drawable.breads)
-        .setCategorieProdId3(R.drawable.cereals)
-        .setAchete(0)
-
-    var newProduct2 = ListeCourses()
-        .setQuantite(250)
-        .setUniteId(3)
-        .setProduit("condensed milk")
-        .setCategorieProdId1(R.drawable.baby)
-        .setCategorieProdId2(R.drawable.cupcake)
-        .setCategorieProdId3(R.drawable.frozen_food)
-        .setAchete(1)
-
-    var newProduct3 = ListeCourses()
-        .setQuantite(15)
-        .setUniteId(6)
-        .setProduit("big melons")
-        .setCategorieProdId1(R.drawable.sauce_bottle)
-        .setCategorieProdId2(R.drawable.pet)
-        .setCategorieProdId3(R.drawable.mineral_water)
-        .setAchete(0)
-
-    var entries = arrayListOf<ListeCourses>(newProduct1, newProduct2, newProduct3)
-    // ------------ TEST -------------------
+class NewProductListRecycleAdapter(newProducts: ArrayList<ListeCourses>): RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>() {
+    val newProducts = newProducts
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.new_products_list_layout, parent, false)
@@ -51,17 +21,17 @@ class NewProductListRecycleAdapter: RecyclerView.Adapter<NewProductListRecycleAd
     }
 
     override fun getItemCount(): Int {
-        return entries.size
+        return newProducts.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.newProdQty.text = entries.get(position).quantite.toString()
-        holder.newProdUnit.text = listOfUnits.get(entries.get(position).uniteId)
-        holder.newProdName.text = entries.get(position).produit
-        holder.newProdCat1Img.setImageResource(entries.get(position).categorieProdId1)
-        holder.newProdCat2Img.setImageResource(entries.get(position).categorieProdId2)
-        holder.newProdCat3Img.setImageResource(entries.get(position).categorieProdId3)
-        holder.newProdChkBox.isChecked = if (entries.get(position).achete == 0) false else true
+        holder.newProdQty.text = newProducts.get(position).quantite.toString()
+        holder.newProdUnit.text = listOfUnits.get(newProducts.get(position).uniteId)
+        holder.newProdName.text = newProducts.get(position).produit
+        holder.newProdCat1Img.setImageResource(newProducts.get(position).categorieProdId1)
+        holder.newProdCat2Img.setImageResource(newProducts.get(position).categorieProdId2)
+        holder.newProdCat3Img.setImageResource(newProducts.get(position).categorieProdId3)
+        holder.newProdChkBox.isChecked = if (newProducts.get(position).achete == 0) false else true
     }
 
     inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
@@ -85,7 +55,9 @@ class NewProductListRecycleAdapter: RecyclerView.Adapter<NewProductListRecycleAd
             itemView.setOnClickListener {
                 val position: Int = adapterPosition
 
-                Toast.makeText(itemView.context, "You have clicked on item #${entries.get(position).produit}", Toast.LENGTH_SHORT).show()
+                // -------------------- TEST --------------------
+                Toast.makeText(itemView.context, "You have clicked on item: ${newProducts.get(position).produit}", Toast.LENGTH_SHORT).show()
+                // -------------------- TEST --------------------
             }
         }
     }

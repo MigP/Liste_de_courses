@@ -153,6 +153,7 @@ class SplashActivity : AppCompatActivity() {
             val categoriesDAO = CategoriesDAO(this)
             categoriesDAO.openWritable()
             categoriesDAO.insert(Categories("Fruits", "Fruit", "apple"))
+            categoriesDAO.insert(Categories("Légumes", "Vegetables", "lettuce"))
             categoriesDAO.insert(Categories("Conserves", "Canned Goods", "canned_food"))
             categoriesDAO.insert(Categories("Surgelés", "Frozen Food", "frozen_food"))
             categoriesDAO.insert(Categories("Produits régionaux", "Regional products", "noodle"))

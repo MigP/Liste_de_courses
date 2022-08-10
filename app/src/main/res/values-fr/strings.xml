@@ -2,6 +2,17 @@
 <resources>
     <string name="app_name">Liste de courses</string>
     <string name="my_lists">Afficher mes listes</string>
-    <string name="create_list">Créer une liste</string>
+    <string name="create_a_list">Créer une liste</string>
     <string name="your_shopping_lists">Vos listes de courses</string>
+    <string name="quantity">Quantité</string>
+    <string name="product_name">Nom du produit</string>
+    <string name="add_categories">+ Catégories -></string>
+    <string name="add_product">+ Produit</string>
+    <string name="create_list">Créer liste</string>
+    <string name="cancel">Annuler</string>
+    <string name="pick_3_categories">Choisissez jusqu\'à 3 catégories</string>
+    <string name="you_must_include_product_name">Vous devez inclure un nom de produit</string>
+    <string name="you_must_include_quantity">Vous devez inclure la quantité</string>
+    <string name="forbidden_characters">Vous avez utilisé des caractères interdits</string>
+    <string name="limite_3_categories">Vous ne pouvez pas choisir plus que 3 catégories</string>
 </resources>

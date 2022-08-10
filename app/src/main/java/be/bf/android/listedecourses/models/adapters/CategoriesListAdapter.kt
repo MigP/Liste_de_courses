@@ -65,7 +65,7 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
 
                     this.categoriesListInterface.onItemChecked(position)
                 } else {
-                    Toast.makeText(context, "You have reached your limit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.limite_3_categories, Toast.LENGTH_SHORT).show()
                 }
             })
 
@@ -83,7 +83,7 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
                     this.categoriesListInterface.onItemChecked(position)
                 } else {
                     checkbox.toggle()
-                    Toast.makeText(context, "You have reached your limit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.limite_3_categories, Toast.LENGTH_SHORT).show()
                 }
             }
 

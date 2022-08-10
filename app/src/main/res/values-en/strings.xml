@@ -2,6 +2,17 @@
 <resources>
     <string name="app_name">Shopping list</string>
     <string name="my_lists">Show my lists</string>
-    <string name="create_list">Create a list</string>
+    <string name="create_a_list">Create a list</string>
     <string name="your_shopping_lists">Your shopping lists</string>
+    <string name="quantity">Quantity</string>
+    <string name="product_name">Product name</string>
+    <string name="add_categories">+ Categories -></string>
+    <string name="add_product">+ Product</string>
+    <string name="create_list">Create list</string>
+    <string name="cancel">Cancel</string>
+    <string name="pick_3_categories">Pick up to 3 categories</string>
+    <string name="you_must_include_product_name">You must include a name for your product</string>
+    <string name="you_must_include_quantity">You must include the quantity</string>
+    <string name="forbidden_characters">You have used forbidden characters</string>
+    <string name="limite_3_categories">You cannot choose more than 3 categories</string>
 </resources>

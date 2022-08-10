@@ -52,11 +52,12 @@ class FragmentCreateList : Fragment() {
         listOfCategories = getProductCategories()
         listOfUnits = getUnits()
 
-        newProdListLayoutManager = LinearLayoutManager(requireContext())
-        val recyclerView = v.findViewById<RecyclerView>(R.id.create_list_recycler)
-        recyclerView.layoutManager = newProdListLayoutManager
-        newProdListAdapter = NewProductListRecycleAdapter()
-        recyclerView.adapter = newProdListAdapter
+        // Creates the RecyclerView that contains the list of products
+            newProdListLayoutManager = LinearLayoutManager(requireContext())
+            val recyclerView = v.findViewById<RecyclerView>(R.id.create_list_recycler)
+            recyclerView.layoutManager = newProdListLayoutManager
+            newProdListAdapter = NewProductListRecycleAdapter(entries)
+            recyclerView.adapter = newProdListAdapter
 
         // Create dropdown menu with units to choose from
             val spinner: Spinner =  v.findViewById(R.id.unitsDropdown);
@@ -84,7 +85,7 @@ class FragmentCreateList : Fragment() {
         var selectedUnit: Int = 0
         var listOfCategories = ArrayList<Category>()
         var listOfUnits = ArrayList<String>()
-        var newProduct = ListeCourses()
+        var entries = arrayListOf<ListeCourses>()
 
         @JvmStatic
         fun newInstance() =
@@ -93,14 +94,14 @@ class FragmentCreateList : Fragment() {
     }
 
     private fun addCategories(view: View) { // Adds up to 3 categories to the product being created by the user
-        // Creating the alert dialog with the categories to be selected
+        // Creats the alert dialog with the categories to be selected
             val dialogbuider = AlertDialog.Builder(requireContext())
             dialogbuider.setCancelable(false)
-            dialogbuider.setTitle("Pick up to 3 categories")
+            dialogbuider.setTitle(R.string.pick_3_categories)
 
             val categoriesListAdapter = CategoriesListAdapter(listOfCategories, requireContext(), object :
                 CategoriesListInterface {
-                override fun onItemChecked(position: Int) {
+                    override fun onItemChecked(position: Int) {
                 }
             })
 
@@ -139,46 +140,61 @@ class FragmentCreateList : Fragment() {
     }
 
     private fun addProduct(view: View) { // Adds the created product to the list being created
-        //TODO validate product data and insert it into the recycler adapter
+        val regex = """[\|\/\"]""".toRegex()
+        val et_productName: EditText? = getView()?.findViewById(R.id.et_productName)
+        val et_quantity: EditText? = getView()?.findViewById(R.id.et_quantity)
 
-        // Sets the created product name
-            val et_productName: EditText? = getView()?.findViewById(R.id.et_productName)
-            if (et_productName != null) {
-                newProduct!!.setProduit(et_productName.text.toString())
-            }
-
-        // Sets the created product quantity
-            val et_quantity: EditText? = getView()?.findViewById(R.id.et_quantity)
-            if (et_quantity != null) {
-                newProduct!!.setQuantite(et_quantity.text.toString().toInt())
-            }
-
-        // Sets the created product unit
-            newProduct!!.setUniteId(selectedUnit)
-
-        // Creates an ArrayList containing the names of the selected categories for this product
-            // Fills up catsSel with the selected categories names
-                val catsSel = ArrayList<String>()
-                var counter = 0
-                for (item in listOfCategories) {
-                    if (item.isSelected) {
-                        catsSel.add(item.name)
+        if (et_productName!!.text.toString().length == 0) { // Data field validation
+            Toast.makeText(requireContext(), R.string.you_must_include_product_name, Toast.LENGTH_SHORT).show()
+        } else if (et_quantity!!.text.toString().length == 0) { // Data field validation
+            Toast.makeText(requireContext(), R.string.you_must_include_quantity, Toast.LENGTH_SHORT).show()
+        } else if (regex.containsMatchIn(et_productName.text.toString())) { // Data field validation
+            Toast.makeText(requireContext(), R.string.forbidden_characters, Toast.LENGTH_SHORT).show()
+        } else {
+            // Creates an ArrayList containing the names of the selected categories for this product
+                // Fills up catsSel with the selected categories names
+                    val catsSel = ArrayList<Int>()
+                    for (item in listOfCategories) {
+                        if (item.isSelected) {
+                            catsSel.add(item.icon)
+                        }
                     }
-                }
-            // Fills up the remainder of catsSel with empty categories names (N/A)
-                if (catsSel.isEmpty()) {
-                    catsSel.add("N/A")
-                }
-                if (catsSel.size == 1) {
-                    catsSel.add("N/A")
-                }
-                if (catsSel.size == 2) {
-                    catsSel.add("N/A")
-                }
+                // Fills up the remainder of catsSel with empty categories names (-1)
+                    if (catsSel.isEmpty()) {
+                        catsSel.add(R.drawable.none_icon)
+                    }
+                    if (catsSel.size == 1) {
+                        catsSel.add(R.drawable.none_icon)
+                    }
+                    if (catsSel.size == 2) {
+                        catsSel.add(R.drawable.none_icon)
+                    }
 
-        println("----------------- ADDED: " + newProduct.quantite.toString() + " " + listOfUnits.get(
-            newProduct.uniteId) + " " + newProduct.produit.toString())
-        println("-------------Categories: " + catsSel.get(0) + ", " + catsSel.get(1) + ", " + catsSel.get(2))
+            // Adds created product to the recyclerview that contains the list of products
+                var newProduct = ListeCourses()
+                    .setQuantite(et_quantity.text.toString().toInt())
+                    .setUniteId(selectedUnit)
+                    .setProduit(et_productName!!.text.toString())
+                    .setCategorieProdId1(catsSel.get(0))
+                    .setCategorieProdId2(catsSel.get(1))
+                    .setCategorieProdId3(catsSel.get(2))
+                    .setAchete(0)
+                entries.add(newProduct)
+                (newProdListAdapter as NewProductListRecycleAdapter).notifyDataSetChanged()
+
+            // Reset all the inputs
+                et_productName.setText("")
+                et_quantity.setText("")
+                var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
+                changeImg(requireView().findViewById(R.id.iv_cat1), resID)
+                changeImg(requireView().findViewById(R.id.iv_cat2), resID)
+                changeImg(requireView().findViewById(R.id.iv_cat3), resID)
+                for (item in listOfCategories) {
+                    item.isSelected = false
+                }
+                selectedUnit = 0
+                selectedCategoriesCounter = 0
+        }
     }
 
     private fun cancelCreate(view: View) { // Closes the alert dialog box
