@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
+import be.bf.android.listedecourses.dal.ListeCoursesDAO
+import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
 import be.bf.android.listedecourses.models.CategoriesListInterface
-import be.bf.android.listedecourses.models.entities.Category
 import be.bf.android.listedecourses.models.adapters.CategoriesListAdapter
 import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
-import be.bf.android.listedecourses.models.entities.Categories
-import be.bf.android.listedecourses.models.entities.ListeCourses
-import be.bf.android.listedecourses.models.entities.Unites
+import be.bf.android.listedecourses.models.entities.*
 
 
 class FragmentCreateList : Fragment() {
@@ -51,6 +50,7 @@ class FragmentCreateList : Fragment() {
 
         listOfCategories = getProductCategories()
         listOfUnits = getUnits()
+        entries.clear()
 
         // Creates the RecyclerView that contains the list of products
             newProdListLayoutManager = LinearLayoutManager(requireContext())
@@ -171,7 +171,13 @@ class FragmentCreateList : Fragment() {
                     }
 
             // Adds created product to the recyclerview that contains the list of products
+                val listeListes = ListeListesDAO(requireContext())
+                listeListes.openReadable()
+
+            listeListes.findLastId()
+
                 var newProduct = ListeCourses()
+                    .setListeId(listeListes.findAll().lastIndex)
                     .setQuantite(et_quantity.text.toString().toInt())
                     .setUniteId(selectedUnit)
                     .setProduit(et_productName!!.text.toString())
@@ -201,8 +207,29 @@ class FragmentCreateList : Fragment() {
         setFragmentResult("requestKey", bundleOf("createFragmentData" to "cancelCreate"))
     }
 
-    private fun createList(view: View) {
-        //TODO validate all items present and create new list
+    private fun createList(view: View) { // Adds the list to the database tables and returns to splash screen
+        val listeCourses = ListeCoursesDAO(requireContext())
+        val listListes = ListeListesDAO(requireContext())
+
+        listeCourses.openWritable()
+        val entriesIterator = entries.iterator()
+        var iteratorCounter = 0
+
+        while(entriesIterator.hasNext()){
+            entriesIterator.next()
+            listeCourses.insert(entries.get(iteratorCounter))
+            iteratorCounter++
+        }
+
+        //TODO Add new list to list of lists db table --> ASK USER LIST NAME AND TAG!!!!!
+        val newList = ListeListes()
+            .setListName("Test name")
+            .setListTag("Test tag")
+
+        listListes.openWritable()
+        listListes.insert(newList)
+
+        setFragmentResult("requestKey", bundleOf("createFragmentData" to "cancelCreate"))
     }
 
     private fun getProductCategories(): ArrayList<Category> { // Gets product categories from the database and returns them in an ArrayList of Category objects

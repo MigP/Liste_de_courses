@@ -67,6 +67,15 @@ public class ListeListesDAO {
         return listesListes;
     }
 
+   @SuppressLint("Range")
+   public int findLastId() {
+        Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes WHERE id = ?", new String[]{"SELECT MAX(ID)"});
+        cursor.moveToNext();
+
+       System.out.println("----------------------" + cursor.getInt(cursor.getColumnIndex("id")));
+       return cursor.getInt(cursor.getColumnIndex("id"));
+    }
+
     public long insert(ListeListes listeListes) {
         ContentValues cv = new ContentValues();
         cv.put("listName", listeListes.getListName());
