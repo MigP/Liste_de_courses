@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContentProviderCompat.requireContext
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.models.CategoriesListInterface
 import be.bf.android.listedecourses.models.entities.Category
@@ -41,7 +42,7 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
 
 
         val categoriesListImg: ImageView = convertView!!.findViewById(R.id.categoriesListImg)
-        categoriesListImg.setImageResource(listOfCategories.get(position).icon)
+        categoriesListImg.setImageResource(listOfCategories.get(position).categoryIconId)
 
         val tv_categoriesList: TextView = convertView.findViewById(R.id.tv_categoriesList)
         tv_categoriesList.text = listOfCategories.get(position).name
@@ -88,5 +89,9 @@ class CategoriesListAdapter (private var listOfCategories: ArrayList<Category>, 
             }
 
         return convertView
+    }
+
+    fun getImgResourceId(identifier: String): Int {
+        return context.resources.getIdentifier(identifier, "drawable", context.packageName)
     }
 }

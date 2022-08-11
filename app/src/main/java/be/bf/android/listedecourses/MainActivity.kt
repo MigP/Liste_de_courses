@@ -1,8 +1,13 @@
 package be.bf.android.listedecourses
 
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -53,17 +58,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.createListFloatingActionButton.setOnClickListener(this::createList)
+        binding.backFloatingActionButton.setOnClickListener(this::goHome)
     }
 
-    fun createList(view: View) { // Refreshes the main activity and sends the relevant extra in intent so that the create list fragment is visible
-        val createListIntent = Intent(this, MainActivity::class.java)
-        createListIntent.putExtra("targetFragment", "create")
-        startActivity(createListIntent)
+    fun createList(view: View) { // Asks the user for the name of the list and its tags, then jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+        // Creates an AlertDialog that asks the user to choose a name and a tag for the new list
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.create_list_layout)
+            val listName = dialog.findViewById(R.id.et_listName) as EditText
+            val listTag = dialog.findViewById(R.id.et_listTag) as EditText
+            val createBtn = dialog.findViewById(R.id.createListBtn) as Button
+            val cancelBtn = dialog.findViewById(R.id.cancelBtn) as Button
+            createBtn.setOnClickListener {
+                // Validates input fields
+                if (listName.text.toString().length == 0) { // Data field validation
+                    Toast.makeText(this, R.string.you_must_enter_name, Toast.LENGTH_SHORT).show()
+                } else if (listTag.text.toString().length == 0) { // Data field validation
+                    Toast.makeText(this, R.string.you_must_enter_tag, Toast.LENGTH_SHORT).show()
+                } else {
+                    dialog.dismiss()
+                    val createListIntent = Intent(this, MainActivity::class.java)
+                    createListIntent.putExtra("targetFragment", "create")
+                    createListIntent.putExtra("newListName", listName.text.toString())
+                    createListIntent.putExtra("newListTag", listTag.text.toString())
+                    startActivity(createListIntent)
+                }
+            }
+            cancelBtn.setOnClickListener { dialog.cancel() }
+            dialog.show()
     }
 
-    fun showLists(view: View) { // Refreshes the main activity and sends the relevant extra in intent so that the show lists fragment is visible
-        val showListsIntent = Intent(this, MainActivity::class.java)
-        showListsIntent.putExtra("targetFragment", "show")
-        startActivity(showListsIntent)
+    fun goHome(view: View) { // Goes back to the splash screen
+        val goHomeIntent = Intent(this, SplashActivity::class.java)
+        startActivity(goHomeIntent)
     }
 }

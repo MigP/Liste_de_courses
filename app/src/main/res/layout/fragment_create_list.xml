@@ -22,10 +22,10 @@
             android:textColor="@color/title"
             android:textSize="25sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_createListTag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="30dp" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_createListTag"

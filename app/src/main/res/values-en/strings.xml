@@ -15,10 +15,11 @@
     <string name="you_must_include_quantity">You must include the quantity</string>
     <string name="forbidden_characters">You have used forbidden characters</string>
     <string name="limite_3_categories">You cannot choose more than 3 categories</string>
-    <string name="enter_a_name_for_the_list">Enter a name for the list:</string>
+    <string name="enter_a_name_for_the_list">List name:</string>
     <string name="your_list_name">Your list name</string>
-    <string name="enter_cat_tag">Enter a category tag for the list:</string>
+    <string name="enter_cat_tag">Your list tag:</string>
     <string name="your_list_tag">Your list tag</string>
     <string name="you_must_enter_tag">You must give your list a tag</string>
     <string name="you_must_enter_name">You must give your list a name</string>
+    <string name="edit">Edit</string>
 </resources>
