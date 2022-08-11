@@ -15,7 +15,7 @@ public class UnitesDAO {
     public static final String CREATE_QUERY = "CREATE TABLE unites(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, unitFr VARCHAR(6) NOT NULL DEFAULT 'Unités', unitEn VARCHAR(6) NOT NULL DEFAULT 'Units')";
     public static final String UPGRADE_QUERY = "DROP TABLE unites;";
 
-    private DbHelper helper;
+    private final DbHelper helper;
     private SQLiteDatabase database;
 
     public UnitesDAO(Context context) {

@@ -1,5 +1,7 @@
 package be.bf.android.listedecourses.models.entities;
 
+import androidx.annotation.NonNull;
+
 public class Unites {
     private String unitFr;
     private String unitEn;
@@ -12,6 +14,7 @@ public class Unites {
         this.unitEn = unitEn;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Unites{" +

@@ -15,7 +15,7 @@ public class CategoriesDAO {
     public static final String CREATE_QUERY = "CREATE TABLE categories(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, categorieProdFr VARCHAR(15) NOT NULL, categorieProdEn VARCHAR(15) NOT NULL, imageSrc VARCHAR(10) UNIQUE NOT NULL)";
     public static final String UPGRADE_QUERY = "DROP TABLE categories;";
 
-    private DbHelper helper;
+    private final DbHelper helper;
     private SQLiteDatabase database;
 
     public CategoriesDAO(Context context) {

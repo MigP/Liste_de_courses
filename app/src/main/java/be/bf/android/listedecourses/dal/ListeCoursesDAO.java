@@ -15,7 +15,7 @@ public class ListeCoursesDAO implements Closeable {
     public static final String CREATE_QUERY = "CREATE TABLE liste_courses(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listeId INTEGER NOT NULL, produit VARCHAR(15) NOT NULL, quantite INTEGER NOT NULL DEFAULT 0, uniteId INTEGER NOT NULL DEFAULT 0, categorieProdId1 INTEGER NOT NULL, categorieProdId2 INTEGER NOT NULL, categorieProdId3 INTEGER NOT NULL, achete INTEGER NOT NULL DEFAULT 0, CONSTRAINT fk_liste_listes FOREIGN KEY (listeId) REFERENCES liste_listes(id), CONSTRAINT fk_unites FOREIGN KEY (uniteId) REFERENCES unites(id), CONSTRAINT fk_categories1 FOREIGN KEY (categorieProdId1) REFERENCES categories(id), CONSTRAINT fk_categories2 FOREIGN KEY (categorieProdId2) REFERENCES categories(id), CONSTRAINT fk_categories3 FOREIGN KEY (categorieProdId3) REFERENCES categories(id))";
     public static final String UPGRADE_QUERY = "DROP TABLE liste_courses;";
 
-    private DbHelper helper;
+    private final DbHelper helper;
     private SQLiteDatabase database;
 
     public ListeCoursesDAO(Context context) {

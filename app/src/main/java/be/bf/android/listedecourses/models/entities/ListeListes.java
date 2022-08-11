@@ -1,5 +1,7 @@
 package be.bf.android.listedecourses.models.entities;
 
+import androidx.annotation.NonNull;
+
 public class ListeListes {
     private String listName;
     private String listTag;
@@ -12,6 +14,7 @@ public class ListeListes {
         this.listTag = listTag;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ListeListes{" +

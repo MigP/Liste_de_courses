@@ -1,4 +1,4 @@
-package be.bf.android.listedecourses.models.Gestures
+package be.bf.android.listedecourses.models.gestures
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,8 +10,8 @@ import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 
 abstract class SwipeGesture(context: Context): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-    val deleteColour = ContextCompat.getColor(context,R.color.deleteColour)
-    val deleteIcon = R.drawable.bin
+    private val deleteColour = ContextCompat.getColor(context,R.color.deleteColour)
+    private val deleteIcon = R.drawable.bin
 
     override fun onMove(
         recyclerView: RecyclerView,

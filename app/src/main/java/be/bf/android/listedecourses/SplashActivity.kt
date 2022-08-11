@@ -1,9 +1,7 @@
 package be.bf.android.listedecourses
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -27,7 +25,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.getRoot())
+        setContentView(binding.root)
         setTitle(R.string.app_name)
 
         // Set default language in preferences if none is yet defined
@@ -42,7 +40,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
         // Set the correct language according to preferences, dealing with language codes of regional variations (en_gb, en_us, ...)
-            if (getResources().getConfiguration().locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
+            if (resources.configuration.locale.toString().subSequence(0, 2) != prefs.getString("language", "")) {
                 setLanguage(prefs.getString("language", "")!!) // <---- This refreshes the activity!!!
             }
 
@@ -54,25 +52,25 @@ class SplashActivity : AppCompatActivity() {
         // Splash title fade in
             val splashTitle: TextView = findViewById<View>(R.id.tv_splashTitle) as TextView
             val titleFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            titleFadeIn.setStartOffset(500)
+            titleFadeIn.startOffset = 500
             splashTitle.startAnimation(titleFadeIn)
 
         // Splash image fade in
             val splashImg: ImageView = findViewById<View>(R.id.splashImg) as ImageView
             val splashImageAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            splashImageAnimation.setStartOffset(250)
+            splashImageAnimation.startOffset = 250
             splashImg.startAnimation(splashImageAnimation)
 
         // Show lists button fade in
             val showListsBtn: Button = findViewById<View>(R.id.showListsBtn) as Button
             val showListsBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            showListsBtnFadeIn.setStartOffset(1000)
+            showListsBtnFadeIn.startOffset = 1000
             showListsBtn.startAnimation(showListsBtnFadeIn)
 
         // Create list button fade in
             val createListBtn: Button = findViewById<View>(R.id.createListBtn) as Button
             val createListBtnFadeIn: Animation = AnimationUtils.loadAnimation(this, R.anim.fadein10)
-            createListBtnFadeIn.setStartOffset(1000)
+            createListBtnFadeIn.startOffset = 1000
             createListBtn.startAnimation(createListBtnFadeIn)
 
         binding.showListsBtn.setOnClickListener(this::showLists)
@@ -80,7 +78,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu
-        val inflater: MenuInflater = getMenuInflater()
+        val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.language_menu, menu)
         return true
     }
@@ -107,7 +105,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    fun setLanguage(lang: String) { // Function that sets the locale and refreshes the activity
+    private fun setLanguage(lang: String) { // Function that sets the locale and refreshes the activity
         val myLocale = Locale(lang)
         val res = resources
         val dm = res.displayMetrics
@@ -115,12 +113,12 @@ class SplashActivity : AppCompatActivity() {
         conf.setLocale(myLocale)
         res.updateConfiguration(conf, dm)
         val refresh = Intent(this, SplashActivity::class.java)
-        refresh.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+        refresh.flags = Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         finish()
         startActivity(refresh)
     }
 
-    fun createList(view: View) { // Asks the user for the name of the list and its tags, then jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+    private fun createList(view: View) { // Asks the user for the name of the list and its tags, then jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
         // Creates an AlertDialog that asks the user to choose a name and a tag for the new list
             val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -132,9 +130,9 @@ class SplashActivity : AppCompatActivity() {
             val cancelBtn = dialog.findViewById(R.id.cancelBtn) as Button
             createBtn.setOnClickListener {
                 // Validates input fields
-                if (listName.text.toString().length == 0) { // Data field validation
+                if (listName.text.toString().isEmpty()) { // Data field validation
                     Toast.makeText(this, R.string.you_must_enter_name, Toast.LENGTH_SHORT).show()
-                } else if (listTag.text.toString().length == 0) { // Data field validation
+                } else if (listTag.text.toString().isEmpty()) { // Data field validation
                     Toast.makeText(this, R.string.you_must_enter_tag, Toast.LENGTH_SHORT).show()
                 } else {
                     dialog.dismiss()
@@ -149,13 +147,13 @@ class SplashActivity : AppCompatActivity() {
             dialog.show()
     }
 
-    fun showLists(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the show lists fragment is visible
+    private fun showLists(view: View) { // Jumps to the main activity and sends the relevant extra in intent so that the show lists fragment is visible
         val showListsIntent = Intent(this, MainActivity::class.java)
         showListsIntent.putExtra("targetFragment", "show")
         startActivity(showListsIntent)
     }
 
-    fun initialiseDb() {
+    private fun initialiseDb() {
         // Populate Table unites
             val unitesDAO = UnitesDAO(this)
             unitesDAO.openWritable()

@@ -1,5 +1,7 @@
 package be.bf.android.listedecourses.models.entities;
 
+import androidx.annotation.NonNull;
+
 public class Categories {
     private String categorieProdFr;
     private String categorieProdEn;
@@ -14,6 +16,7 @@ public class Categories {
         this.imageSrc = imageSrc;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Categories{" +

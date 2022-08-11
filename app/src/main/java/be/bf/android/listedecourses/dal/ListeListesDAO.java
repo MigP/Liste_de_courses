@@ -15,7 +15,7 @@ public class ListeListesDAO {
     public static final String CREATE_QUERY = "CREATE TABLE liste_listes(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listName VARCHAR(15) NOT NULL, listTag VARCHAR(20))";
     public static final String UPGRADE_QUERY = "DROP TABLE liste_listes;";
 
-    private DbHelper helper;
+    private final DbHelper helper;
     private SQLiteDatabase database;
 
     public ListeListesDAO(Context context) {
@@ -72,7 +72,7 @@ public class ListeListesDAO {
         if (this.findAll().size() == 0) {
             return 0;
         } else {
-            Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes ORDER BY id DESC LIMIT 1", null);
+            @SuppressLint("Recycle") Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes ORDER BY id DESC LIMIT 1", null);
             cursor.moveToFirst();
             return cursor.getInt(0);
         }

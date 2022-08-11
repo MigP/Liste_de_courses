@@ -1,5 +1,7 @@
 package be.bf.android.listedecourses.models.entities;
 
+import androidx.annotation.NonNull;
+
 public class ListeCourses {
     private int listeId;
     private String produit;
@@ -24,6 +26,7 @@ public class ListeCourses {
         this.achete = achete;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ListeCourses{" +

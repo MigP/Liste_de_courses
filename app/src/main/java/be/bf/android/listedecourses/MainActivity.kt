@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.getRoot())
+        setContentView(binding.root)
         setTitle(R.string.app_name)
 
         // Gets the extra info contained in the intent and decides which fragment to display
@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                     .commit()
             } else if (f.equals("create")){
                 binding.createListFloatingActionButton.hide()
+                binding.backFloatingActionButton.hide()
                 val fm: FragmentManager = supportFragmentManager
                 fm.setFragmentResultListener("requestKey", this) { key, bundle ->
                     val result = bundle.getString("createFragmentData")
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         binding.backFloatingActionButton.setOnClickListener(this::goHome)
     }
 
-    fun createList(view: View) { // Asks the user for the name of the list and its tags, then jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
+    private fun createList(view: View) { // Asks the user for the name of the list and its tags, then jumps to the main activity and sends the relevant extra in intent so that the create list fragment is visible
         // Creates an AlertDialog that asks the user to choose a name and a tag for the new list
             val dialog = Dialog(this)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -73,9 +74,9 @@ class MainActivity : AppCompatActivity() {
             val cancelBtn = dialog.findViewById(R.id.cancelBtn) as Button
             createBtn.setOnClickListener {
                 // Validates input fields
-                if (listName.text.toString().length == 0) { // Data field validation
+                if (listName.text.toString().isEmpty()) { // Data field validation
                     Toast.makeText(this, R.string.you_must_enter_name, Toast.LENGTH_SHORT).show()
-                } else if (listTag.text.toString().length == 0) { // Data field validation
+                } else if (listTag.text.toString().isEmpty()) { // Data field validation
                     Toast.makeText(this, R.string.you_must_enter_tag, Toast.LENGTH_SHORT).show()
                 } else {
                     dialog.dismiss()
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
     }
 
-    fun goHome(view: View) { // Goes back to the splash screen
+    private fun goHome(view: View) { // Goes back to the splash screen
         val goHomeIntent = Intent(this, SplashActivity::class.java)
         startActivity(goHomeIntent)
     }

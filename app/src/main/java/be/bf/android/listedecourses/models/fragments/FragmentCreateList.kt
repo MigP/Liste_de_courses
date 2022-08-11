@@ -20,7 +20,7 @@ import be.bf.android.listedecourses.dal.ListeCoursesDAO
 import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
 import be.bf.android.listedecourses.models.CategoriesListInterface
-import be.bf.android.listedecourses.models.Gestures.SwipeGesture
+import be.bf.android.listedecourses.models.gestures.SwipeGesture
 import be.bf.android.listedecourses.models.adapters.CategoriesListAdapter
 import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
 import be.bf.android.listedecourses.models.entities.*
@@ -30,14 +30,10 @@ class FragmentCreateList : Fragment() {
     private var newProdListLayoutManager: RecyclerView.LayoutManager? = null
     private var newProdListAdapter: RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val v: View = inflater.inflate(R.layout.fragment_create_list, container, false)
 
         val addCategoriesBtn: Button = v.findViewById(R.id.addCategoriesBtn)
@@ -59,8 +55,8 @@ class FragmentCreateList : Fragment() {
         // Sets the text for the titles
             val title: TextView = v.findViewById(R.id.tv_createListTitle)
             val subTitle: TextView = v.findViewById(R.id.tv_createListTag)
-            title.setText(listName)
-            subTitle.setText(listTag)
+            title.text = listName
+            subTitle.text = listTag
 
         // Creates the RecyclerView that contains the list of products
             newProdListLayoutManager = LinearLayoutManager(requireContext())
@@ -87,7 +83,7 @@ class FragmentCreateList : Fragment() {
         touchHelper.attachToRecyclerView(recyclerView)
 
         // Create dropdown menu with units to choose from
-            val spinner: Spinner =  v.findViewById(R.id.unitsDropdown);
+            val spinner: Spinner =  v.findViewById(R.id.unitsDropdown)
             val adapter: ArrayAdapter<*> = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
@@ -151,7 +147,7 @@ class FragmentCreateList : Fragment() {
 
             dialogbuider.setPositiveButton("OK") { dialogInterface: DialogInterface?, which: Int ->
                 // Resetting the 3 selected category images
-                    var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
+                    val resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
                     changeImg(requireView().findViewById(R.id.iv_cat1), resID)
                     changeImg(requireView().findViewById(R.id.iv_cat2), resID)
                     changeImg(requireView().findViewById(R.id.iv_cat3), resID)
@@ -182,15 +178,15 @@ class FragmentCreateList : Fragment() {
     }
 
     private fun addProduct(view: View) { // Adds or edits the created product to the list being created
-        val regex = """[\|\/\"]""".toRegex()
-        val et_productName: EditText? = getView()?.findViewById(R.id.et_productName)
-        val et_quantity: EditText? = getView()?.findViewById(R.id.et_quantity)
+        val regex = """[|/\\"]""".toRegex()
+        val etProductName: EditText? = getView()?.findViewById(R.id.et_productName)
+        val etQuantity: EditText? = getView()?.findViewById(R.id.et_quantity)
 
-        if (et_productName!!.text.toString().length == 0) { // Data field validation
+        if (etProductName!!.text.toString().isEmpty()) { // Data field validation
             Toast.makeText(requireContext(), R.string.you_must_include_product_name, Toast.LENGTH_SHORT).show()
-        } else if (et_quantity!!.text.toString().length == 0) { // Data field validation
+        } else if (etQuantity!!.text.toString().isEmpty()) { // Data field validation
             Toast.makeText(requireContext(), R.string.you_must_include_quantity, Toast.LENGTH_SHORT).show()
-        } else if (regex.containsMatchIn(et_productName.text.toString())) { // Data field validation
+        } else if (regex.containsMatchIn(etProductName.text.toString())) { // Data field validation
             Toast.makeText(requireContext(), R.string.forbidden_characters, Toast.LENGTH_SHORT).show()
         } else {
             // Creates an ArrayList containing the names of the selected categories for this product
@@ -222,14 +218,14 @@ class FragmentCreateList : Fragment() {
             // Adds created product to the recyclerview that contains the list of products
                 val listeListes = ListeListesDAO(requireContext())
                 listeListes.openReadable()
-                var newProduct = ListeCourses()
+                val newProduct = ListeCourses()
                     .setListeId(listeListes.findLastId() + 1)
-                    .setQuantite(et_quantity.text.toString().toInt())
+                    .setQuantite(etQuantity.text.toString().toInt())
                     .setUniteId(selectedUnit)
-                    .setProduit(et_productName!!.text.toString())
-                    .setCategorieProdId1(catsSel.get(0))
-                    .setCategorieProdId2(catsSel.get(1))
-                    .setCategorieProdId3(catsSel.get(2))
+                    .setProduit(etProductName.text.toString())
+                    .setCategorieProdId1(catsSel[0])
+                    .setCategorieProdId2(catsSel[1])
+                    .setCategorieProdId3(catsSel[2])
                     .setAchete(0)
             // If in edit mode add edited item to the original position on the list
                 if (editionMode) { // Ends edition mode and returns to default mode
@@ -241,9 +237,9 @@ class FragmentCreateList : Fragment() {
                 (newProdListAdapter as NewProductListRecycleAdapter).notifyDataSetChanged()
 
             // Reset all the inputs
-                et_productName.setText("")
-                et_quantity.setText("")
-                var resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
+                etProductName.setText("")
+                etQuantity.setText("")
+                val resID = resources.getIdentifier("none_icon", "drawable", requireContext().packageName)
                 changeImg(requireView().findViewById(R.id.iv_cat1), resID)
                 changeImg(requireView().findViewById(R.id.iv_cat2), resID)
                 changeImg(requireView().findViewById(R.id.iv_cat3), resID)
@@ -282,7 +278,7 @@ class FragmentCreateList : Fragment() {
 
         while(entriesIterator.hasNext()){
             entriesIterator.next()
-            listeCourses.insert(entries.get(iteratorCounter))
+            listeCourses.insert(entries[iteratorCounter])
             iteratorCounter++
         }
 
@@ -318,10 +314,8 @@ class FragmentCreateList : Fragment() {
             }
 
         // Creates ArrayList with the IDs for all the categories
-            var catCounter = 0
-            for (item: Categories in categoriesDAO.findAll()) {
-                categoryIdArrayList.add(catCounter)
-                catCounter++
+            for ((catCounter, item: Categories) in categoriesDAO.findAll().withIndex()) {
+                    categoryIdArrayList.add(catCounter)
             }
 
         // Creates ArrayList with the values of isSelected all set to false
@@ -341,7 +335,12 @@ class FragmentCreateList : Fragment() {
             while(listOfCategoriesIterator.hasNext()){
                 listOfCategoriesIterator.next()
 
-                _listOfCategories.add(Category(categoriesArrayList.get(counter), categoryIdArrayList.get(counter), isSelectedArrayList.get(counter), imagesIdArrayList.get(counter)))
+                _listOfCategories.add(Category(
+                    categoriesArrayList[counter],
+                    categoryIdArrayList[counter],
+                    isSelectedArrayList[counter],
+                    imagesIdArrayList[counter]
+                ))
                 counter++
             }
         return _listOfCategories
@@ -372,7 +371,7 @@ class FragmentCreateList : Fragment() {
         targetImg.setImageResource(imgResourceId)
     }
 
-    fun getImgResourceId(identifier: String): Int {
+    private fun getImgResourceId(identifier: String): Int {
         return resources.getIdentifier(identifier, "drawable", requireContext().packageName)
     }
 }

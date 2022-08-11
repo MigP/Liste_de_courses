@@ -9,14 +9,11 @@ import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.CategoriesDAO
 
 class FragmentShowList : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val v: View = inflater.inflate(R.layout.fragment_show_lists, container, false)
 
