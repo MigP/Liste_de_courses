@@ -10,12 +10,22 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.dal.CategoriesDAO
+import be.bf.android.listedecourses.dal.ListeCoursesDAO
+import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.dal.UnitesDAO
 import be.bf.android.listedecourses.databinding.ActivitySplashBinding
-import be.bf.android.listedecourses.models.entities.Categories
-import be.bf.android.listedecourses.models.entities.Unites
+import be.bf.android.listedecourses.models.adapters.GeneralListAdapter
+import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
+import be.bf.android.listedecourses.models.entities.*
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList
+import be.bf.android.listedecourses.models.gestures.SwipeGesture
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SplashActivity : AppCompatActivity() {
@@ -75,6 +85,48 @@ class SplashActivity : AppCompatActivity() {
 
         binding.showListsBtn.setOnClickListener(this::showLists)
         binding.createListBtn.setOnClickListener(this::createList)
+
+        // Creates the RecyclerView that contains the list of lists
+            val listeListes = ArrayList<GeneralList>()
+
+            // Fetches info from database
+                var listId = 0
+                var listItemCount = 0
+                var checkedListItemCount = 0
+
+                val listeCoursesDAO = ListeCoursesDAO(this)
+                listeCoursesDAO.openReadable()
+                val listeListesDAO = ListeListesDAO(this)
+                listeListesDAO.openReadable()
+
+                for ((count, listsItem: ListeListes) in listeListesDAO.findAll().withIndex()) { // Database listes_listes table
+                    checkedListItemCount = 0
+
+                    listId = listeListesDAO.findId()[count]
+                    listItemCount = listeCoursesDAO.findByListId(listId).size
+                    println("--------------------- listItemsCount: " + listItemCount)
+                    for (productsItem: ListeCourses in listeCoursesDAO.findByListId(listId)) { // Database liste_courses table
+                        if (productsItem.achete == 1) checkedListItemCount++
+                    }
+                    println("--------------------- checkedListItemCount: " + checkedListItemCount)
+
+                    var generalList = GeneralList()
+                        ?.setListName(listsItem.listName)
+                        ?.setListTag(listsItem.listTag)
+                        ?.setListItems(checkedListItemCount.toString() + "/" + listItemCount.toString())
+                    listeListes.add(generalList!!)
+                }
+
+            // Fetches products info from database
+            var generalListAdapterLayoutManager: RecyclerView.LayoutManager? = null
+            var generalListAdapter: RecyclerView.Adapter<GeneralListAdapter.ViewHolder>? = null
+
+            generalListAdapterLayoutManager = LinearLayoutManager(this)
+            val recyclerView = findViewById<RecyclerView>(R.id.lists_preview_recycler)
+            recyclerView.layoutManager = generalListAdapterLayoutManager
+            generalListAdapter = GeneralListAdapter(listeListes, this)
+            recyclerView.adapter = generalListAdapter
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean { // Creates language menu

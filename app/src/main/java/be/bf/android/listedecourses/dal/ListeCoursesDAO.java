@@ -73,6 +73,19 @@ public class ListeCoursesDAO implements Closeable {
         return listesCourses;
     }
 
+    public List<ListeCourses> findByListId(int id) {
+        List<ListeCourses> listesCourses = new ArrayList<>();
+        Cursor cursor = this.database.rawQuery("SELECT * FROM liste_courses WHERE listeId = ?", new String[]{String.valueOf(id)});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                listesCourses.add(getListeCoursesfromCursor(cursor));
+            } while (cursor.moveToNext());
+        }
+
+        return listesCourses;
+    }
+
     public long insert(ListeCourses listeCourses) {
         ContentValues cv = new ContentValues();
         cv.put("listeId", listeCourses.getListeId());

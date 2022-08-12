@@ -137,6 +137,7 @@ class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, pri
                 }
         }
     }
+
     fun deleteItem(position: Int) {
         newProducts.removeAt(position)
         notifyDataSetChanged()

@@ -67,6 +67,20 @@ public class ListeListesDAO {
         return listesListes;
     }
 
+    @SuppressLint("Range")
+    public List<Integer> findId() {
+        List<Integer> listIds = new ArrayList<>();
+        Cursor cursor = this.database.rawQuery("SELECT id FROM liste_listes", null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                listIds.add(cursor.getInt(cursor.getColumnIndex("id")));
+            } while (cursor.moveToNext());
+        }
+
+        return listIds;
+    }
+
    @SuppressLint("Range")
    public int findLastId() {
         if (this.findAll().size() == 0) {
