@@ -20,6 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="List name"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -29,6 +30,7 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:text="List tag"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_general_items"
             app:layout_constraintEnd_toStartOf="@+id/tv_general_items" />
@@ -38,6 +40,7 @@
             android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:text="8/10"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

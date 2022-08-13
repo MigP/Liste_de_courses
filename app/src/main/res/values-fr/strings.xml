@@ -17,7 +17,7 @@
     <string name="limite_3_categories">Vous ne pouvez pas choisir plus que 3 catégories</string>
     <string name="enter_a_name_for_the_list">Nom de la liste:</string>
     <string name="your_list_name">Le nom de votre liste</string>
-    <string name="enter_cat_tag">Le tag de votre liste:</string>
+    <string name="enter_cat_tag">Tag de votre liste:</string>
     <string name="your_list_tag">Le tag de votre liste</string>
     <string name="you_must_enter_tag">Vous devez choisir un tag pour la liste</string>
     <string name="you_must_enter_name">Vous devez choisir un nom pour la liste</string>

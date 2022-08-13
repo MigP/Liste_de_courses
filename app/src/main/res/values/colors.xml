@@ -9,4 +9,6 @@
   <color name="white">#FFFFFFFF</color>
   <color name="title">#FF9800</color>
   <color name="deleteColour">#D57771</color>
+  <color name="unfinished">#D57771</color>
+  <color name="finished">#8BC34A</color>
 </resources>

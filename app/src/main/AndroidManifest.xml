@@ -17,9 +17,13 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.ListeDeCourses.NoActionBar" />
         <activity
             android:name=".SplashActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

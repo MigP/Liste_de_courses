@@ -24,6 +24,9 @@ import be.bf.android.listedecourses.models.gestures.SwipeGesture
 import be.bf.android.listedecourses.models.adapters.CategoriesListAdapter
 import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
 import be.bf.android.listedecourses.models.entities.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FragmentCreateList : Fragment() {
@@ -285,6 +288,7 @@ class FragmentCreateList : Fragment() {
         val newList = ListeListes()
             .setListName(listName)
             .setListTag(listTag)
+            .setDate(SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date()).toString())
 
         listListes.openWritable()
         listListes.insert(newList)

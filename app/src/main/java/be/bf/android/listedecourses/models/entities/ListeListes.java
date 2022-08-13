@@ -2,16 +2,20 @@ package be.bf.android.listedecourses.models.entities;
 
 import androidx.annotation.NonNull;
 
+import java.util.Date;
+
 public class ListeListes {
     private String listName;
     private String listTag;
+    private String date;
 
     public ListeListes() {
     }
 
-    public ListeListes(String listName, String listTag) {
+    public ListeListes(String listName, String listTag, String date) {
         this.listName = listName;
         this.listTag = listTag;
+        this.date = date;
     }
 
     @NonNull
@@ -20,6 +24,7 @@ public class ListeListes {
         return "ListeListes{" +
                 "listName='" + listName + '\'' +
                 ", listTag='" + listTag + '\'' +
+                ", date='" + date + '\'' +
                 '}';
     }
 
@@ -38,6 +43,15 @@ public class ListeListes {
 
     public ListeListes setListTag(String listTag) {
         this.listTag = listTag;
+        return this;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public ListeListes setDate(String date) {
+        this.date = date;
         return this;
     }
 }

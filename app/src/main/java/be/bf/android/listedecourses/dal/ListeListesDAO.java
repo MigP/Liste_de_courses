@@ -12,7 +12,7 @@ import java.util.List;
 import be.bf.android.listedecourses.models.entities.ListeListes;
 
 public class ListeListesDAO {
-    public static final String CREATE_QUERY = "CREATE TABLE liste_listes(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listName VARCHAR(15) NOT NULL, listTag VARCHAR(20))";
+    public static final String CREATE_QUERY = "CREATE TABLE liste_listes(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, listName VARCHAR(15) NOT NULL, listTag VARCHAR(20), date VARCHAR NOT NULL)";
     public static final String UPGRADE_QUERY = "DROP TABLE liste_listes;";
 
     private final DbHelper helper;
@@ -35,6 +35,7 @@ public class ListeListesDAO {
         ListeListes listeListes = new ListeListes();
         listeListes.setListName(cursor.getString(cursor.getColumnIndex("listName")));
         listeListes.setListTag(cursor.getString(cursor.getColumnIndex("listTag")));
+        listeListes.setDate(cursor.getString(cursor.getColumnIndex("date")));
 
         return listeListes;
     }
@@ -96,6 +97,7 @@ public class ListeListesDAO {
         ContentValues cv = new ContentValues();
         cv.put("listName", listeListes.getListName());
         cv.put("listTag", listeListes.getListTag());
+        cv.put("date", listeListes.getDate());
 
         return this.database.insert("liste_listes", null, cv);
     }
@@ -104,6 +106,7 @@ public class ListeListesDAO {
         ContentValues cv = new ContentValues();
         cv.put("listName", listeListes.getListName());
         cv.put("listTag", listeListes.getListTag());
+        cv.put("date", listeListes.getDate());
 
         return this.database.update("liste_listes", cv, "id = ?", new String[]{String.valueOf(id)});
     }

@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/activity_main.xml" value="0.2351851851851852" />
-        <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/activity_splash.xml" value="0.33" />
+        <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/activity_splash.xml" value="0.25" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/categories_list_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/create_list_layout.xml" value="0.33" />
+        <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/detailed_list_of_lists.xml" value="0.5" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/fragment_create_list.xml" value="0.33" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/fragment_show_lists.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/general_list_of_lists.xml" value="0.33" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/lists_preview.xml" value="0.253125" />
         <entry key="..\:/Users/Mig/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/new_products_list_layout.xml" value="0.33" />
         <entry key="..\:/Users/STG1851/AndroidStudioProjects/Liste_de_courses/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />

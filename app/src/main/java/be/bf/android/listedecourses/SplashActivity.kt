@@ -104,16 +104,17 @@ class SplashActivity : AppCompatActivity() {
 
                     listId = listeListesDAO.findId()[count]
                     listItemCount = listeCoursesDAO.findByListId(listId).size
-                    println("--------------------- listItemsCount: " + listItemCount)
+
                     for (productsItem: ListeCourses in listeCoursesDAO.findByListId(listId)) { // Database liste_courses table
                         if (productsItem.achete == 1) checkedListItemCount++
                     }
-                    println("--------------------- checkedListItemCount: " + checkedListItemCount)
 
                     var generalList = GeneralList()
                         ?.setListName(listsItem.listName)
                         ?.setListTag(listsItem.listTag)
+                        ?.setListDate(listsItem.date)
                         ?.setListItems(checkedListItemCount.toString() + "/" + listItemCount.toString())
+                    if (listItemCount.toString() == checkedListItemCount.toString()) generalList!!.setColour("green") else generalList!!.setColour("red")
                     listeListes.add(generalList!!)
                 }
 
