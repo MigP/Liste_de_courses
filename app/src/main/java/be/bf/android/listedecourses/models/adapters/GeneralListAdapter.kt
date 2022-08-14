@@ -49,11 +49,7 @@ class GeneralListAdapter(val listsArray: ArrayList<GeneralList>, val passedConte
             listItems = itemView.findViewById(R.id.tv_general_items)
 
             itemView.setOnClickListener {
-                println(listsArray[adapterPosition].getListName())
-                println(listsArray[adapterPosition].getListDate())
-                val currentDate = SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date())
-
-                println("##################### " + currentDate)
+                //TODO Take me to details of this list
             }
         }
 

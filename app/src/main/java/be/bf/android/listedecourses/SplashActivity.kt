@@ -118,15 +118,14 @@ class SplashActivity : AppCompatActivity() {
                     listeListes.add(generalList!!)
                 }
 
-            // Fetches products info from database
-            var generalListAdapterLayoutManager: RecyclerView.LayoutManager? = null
-            var generalListAdapter: RecyclerView.Adapter<GeneralListAdapter.ViewHolder>? = null
-
-            generalListAdapterLayoutManager = LinearLayoutManager(this)
-            val recyclerView = findViewById<RecyclerView>(R.id.lists_preview_recycler)
-            recyclerView.layoutManager = generalListAdapterLayoutManager
-            generalListAdapter = GeneralListAdapter(listeListes, this)
-            recyclerView.adapter = generalListAdapter
+            // Passes the data on to the recyclerview
+                var generalListAdapterLayoutManager: RecyclerView.LayoutManager? = null
+                var generalListAdapter: RecyclerView.Adapter<GeneralListAdapter.ViewHolder>? = null
+                generalListAdapterLayoutManager = LinearLayoutManager(this)
+                val recyclerView = findViewById<RecyclerView>(R.id.lists_preview_recycler)
+                recyclerView.layoutManager = generalListAdapterLayoutManager
+                generalListAdapter = GeneralListAdapter(listeListes, this)
+                recyclerView.adapter = generalListAdapter
 
     }
 

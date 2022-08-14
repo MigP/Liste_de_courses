@@ -288,7 +288,7 @@ class FragmentCreateList : Fragment() {
         val newList = ListeListes()
             .setListName(listName)
             .setListTag(listTag)
-            .setDate(SimpleDateFormat("dd/MM/yyyy hh:mm:ss").format(Date()).toString())
+            .setDate(SimpleDateFormat("dd/MM/yyyy").format(Date()).toString())
 
         listListes.openWritable()
         listListes.insert(newList)

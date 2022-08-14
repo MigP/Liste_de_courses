@@ -11,52 +11,51 @@ app:cardCornerRadius="12dp"
 app:cardElevation="3dp"
 app:contentPadding="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_detailed_listName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="List name"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/tv_detailed_date"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="List date"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="288dp"
-            tools:layout_editor_absoluteY="0dp" />
+            <TextView
+                android:id="@+id/tv_detailed_listName"
+                android:layout_width="194dp"
+                android:layout_height="wrap_content"
+                android:text="List name"
+                android:textSize="23sp"
+                android:layout_column="1"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_detailed_listTag"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:text="List tag"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="257dp" />
+                <TextView
+                    android:id="@+id/tv_detailed_date"
+                    android:layout_width="195dp"
+                    android:layout_height="wrap_content"
+                    android:text="List date"
+                    android:textSize="18sp"
+                    android:layout_column="2" />
+            </TableRow>
 
-        <TextView
-            android:id="@+id/tv_detailed_items"
-            android:layout_width="45dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="64dp"
-            android:text="8/10"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_detailed_listTag"
+                    android:layout_width="87dp"
+                    android:layout_height="wrap_content"
+                    android:text="List tag"
+                    android:textSize="18sp"
+                    android:layout_column="1" />
 
+                <TextView
+                    android:id="@+id/tv_detailed_items"
+                    android:layout_width="87dp"
+                    android:layout_height="wrap_content"
+                    android:text="8/10"
+                    android:textSize="18sp"
+                    android:layout_column="2" />
+            </TableRow>
+        </TableLayout>
 </androidx.cardview.widget.CardView>

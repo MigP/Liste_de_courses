@@ -21,4 +21,5 @@
     <string name="you_must_enter_tag">You must give your list a tag</string>
     <string name="you_must_enter_name">You must give your list a name</string>
     <string name="edit">Edit</string>
+    <string name="hide_completed_lists">"Hide completed lists "</string>
 </resources>

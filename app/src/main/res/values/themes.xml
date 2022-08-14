@@ -20,4 +20,9 @@
     <style name="Theme.ListeDeCourses.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.ListeDeCourses.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="FilterSwitch" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorControlActivated">#46bdbf</item>
+        <item name="thumbColor">#8DC1D8</item>
+        <item name="android:colorForeground">#F55252</item>
+    </style>
 </resources>
