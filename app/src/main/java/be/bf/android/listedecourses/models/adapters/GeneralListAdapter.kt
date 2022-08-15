@@ -1,11 +1,14 @@
 package be.bf.android.listedecourses.models.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import be.bf.android.listedecourses.MainActivity
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.models.entities.GeneralList
@@ -20,7 +23,7 @@ class GeneralListAdapter(val listsArray: ArrayList<GeneralList>, val passedConte
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneralListAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.general_list_of_lists, parent, false)
-        return ViewHolder(v)
+        return ViewHolder(v, passedContext)
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +41,7 @@ class GeneralListAdapter(val listsArray: ArrayList<GeneralList>, val passedConte
         }
     }
 
-    inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView:View, passedContext: Context): RecyclerView.ViewHolder(itemView) {
         var listName: TextView
         var listTag: TextView
         var listItems: TextView
@@ -49,7 +52,12 @@ class GeneralListAdapter(val listsArray: ArrayList<GeneralList>, val passedConte
             listItems = itemView.findViewById(R.id.tv_general_items)
 
             itemView.setOnClickListener {
-                //TODO Take me to details of this list
+                // Displays the detailed view of this list
+                    val createListIntent = Intent(itemView.context, MainActivity::class.java)
+                    createListIntent.putExtra("targetFragment", "create")
+                    createListIntent.putExtra("fragmentMode", "listViewing")
+                    createListIntent.putExtra("listId", listsArray[adapterPosition].getListId().toString()) // Adds the id of the list just clicked and passes it on to the create fragment
+                    itemView.context.startActivity(createListIntent)
             }
         }
 

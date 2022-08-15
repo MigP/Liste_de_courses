@@ -3,6 +3,7 @@ package be.bf.android.listedecourses.models.entities;
 import androidx.annotation.NonNull;
 
 public class ListeCourses {
+    private int id;
     private int listeId;
     private String produit;
     private int quantite;
@@ -15,7 +16,8 @@ public class ListeCourses {
     public ListeCourses() {
     }
 
-    public ListeCourses(int listeId, String produit, int quantite, int uniteId, int categorieProdId1, int categorieProdId2, int categorieProdId3, int achete) {
+    public ListeCourses(int id, int listeId, String produit, int quantite, int uniteId, int categorieProdId1, int categorieProdId2, int categorieProdId3, int achete) {
+        this.id = id;
         this.listeId = listeId;
         this.produit = produit;
         this.quantite = quantite;
@@ -30,7 +32,8 @@ public class ListeCourses {
     @Override
     public String toString() {
         return "ListeCourses{" +
-                "listeId='" + listeId + '\'' +
+                "id='" + id + '\'' +
+                ", listeId='" + listeId + '\'' +
                 ", produit='" + produit + '\'' +
                 ", quantite='" + quantite + '\'' +
                 ", uniteId='" + uniteId + '\'' +
@@ -39,6 +42,15 @@ public class ListeCourses {
                 ", categorieProdId3='" + categorieProdId3 + '\'' +
                 ", achete='" + achete + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ListeCourses setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public int getListeId() {

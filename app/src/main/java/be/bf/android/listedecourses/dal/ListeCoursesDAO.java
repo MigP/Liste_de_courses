@@ -33,6 +33,7 @@ public class ListeCoursesDAO implements Closeable {
     @SuppressLint("Range")
     public ListeCourses getListeCoursesfromCursor(Cursor cursor) {
         ListeCourses listeCourses = new ListeCourses();
+        listeCourses.setId(cursor.getInt(cursor.getColumnIndex("id")));
         listeCourses.setListeId(cursor.getInt(cursor.getColumnIndex("listeId")));
         listeCourses.setProduit(cursor.getString(cursor.getColumnIndex("produit")));
         listeCourses.setQuantite(cursor.getInt(cursor.getColumnIndex("quantite")));
@@ -116,6 +117,10 @@ public class ListeCoursesDAO implements Closeable {
 
     public int delete(int id) {
         return this.database.delete("liste_courses", "id = ?", new String[]{id + ""});
+    }
+
+    public int deleteProductsOfListId(int id) {
+        return this.database.delete("liste_courses", "listeId = ?", new String[]{id + ""});
     }
 
     public void close() {

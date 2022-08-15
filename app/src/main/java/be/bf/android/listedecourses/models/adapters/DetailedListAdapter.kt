@@ -1,12 +1,14 @@
 package be.bf.android.listedecourses.models.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import be.bf.android.listedecourses.MainActivity
 import be.bf.android.listedecourses.R
 import be.bf.android.listedecourses.models.entities.GeneralList
 
@@ -45,7 +47,12 @@ class DetailedListAdapter(val listsArray: ArrayList<ArrayList<GeneralList>>, val
             listItems = itemView.findViewById(R.id.tv_detailed_items)
 
             itemView.setOnClickListener {
-                //TODO Take me to details of this list
+                // Displays the detailed view of this list
+                    val createListIntent = Intent(itemView.context, MainActivity::class.java)
+                    createListIntent.putExtra("targetFragment", "create")
+                    createListIntent.putExtra("fragmentMode", "listViewing")
+                    createListIntent.putExtra("listId", listsArray[0][adapterPosition].getListId().toString()) // Adds the id of the list just clicked and passes it on to the create fragment
+                    itemView.context.startActivity(createListIntent)
             }
         }
     }

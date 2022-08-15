@@ -1,24 +1,36 @@
 package be.bf.android.listedecourses.models.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
+import be.bf.android.listedecourses.dal.ListeCoursesDAO
+import be.bf.android.listedecourses.dal.ListeListesDAO
 import be.bf.android.listedecourses.models.entities.ListeCourses
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.catImg1
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.catImg2
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.catImg3
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.editItemPosition
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.editionMode
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.etProductName
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.etQuantity
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.fragmentMode
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.listOfCategories
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.listOfUnits
 import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.selectedUnit
+import be.bf.android.listedecourses.models.fragments.FragmentCreateList.Companion.uiVisible
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, private val passedView: View): RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>() {
+class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, private val passedView: View, private val rootView: View): RecyclerView.Adapter<NewProductListRecycleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.new_products_list_layout, parent, false)
-        return ViewHolder(v, passedView)
+        return ViewHolder(v, passedView, rootView, parent.context)
     }
 
     override fun getItemCount(): Int {
@@ -52,7 +64,12 @@ class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, pri
     }
 
     @SuppressLint("ResourceAsColor")
-    inner class ViewHolder(itemView:View, passedView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView:View, passedView: View, rootView: View, context: Context): RecyclerView.ViewHolder(itemView) {
+        val addCategoriesBtn: Button
+        val addProductBtn: Button
+        val cancelCreateListBtn: Button
+        val createListBtn: Button
+        val spinner: Spinner
         var newProdQty: TextView
         var newProdUnit: TextView
         var newProdName: TextView
@@ -62,6 +79,11 @@ class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, pri
         var newProdChkBox: CheckBox
 
         init {
+            addCategoriesBtn = passedView.findViewById(R.id.addCategoriesBtn)
+            addProductBtn = passedView.findViewById(R.id.addProductBtn)
+            cancelCreateListBtn = passedView.findViewById(R.id.cancelCreateListBtn)
+            createListBtn = passedView.findViewById(R.id.createListBtn)
+            spinner =  passedView.findViewById(R.id.unitsDropdown)
             newProdQty = itemView.findViewById(R.id.tv_newProdQty)
             newProdUnit = itemView.findViewById(R.id.tv_newProdUnit)
             newProdName = itemView.findViewById(R.id.tv_newProdName)
@@ -72,37 +94,51 @@ class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, pri
 
             itemView.setOnClickListener {
                 editionMode = true
+                editItemPosition = adapterPosition
 
                 val archivedItem = newProducts[adapterPosition]
-                val etQuantity = passedView.findViewById<EditText>(R.id.et_quantity)
-                val unitsDropdown = passedView.findViewById<Spinner>(R.id.unitsDropdown)
-                val etProductName = passedView.findViewById<EditText>(R.id.et_productName)
-                val ivCat1 = passedView.findViewById<ImageView>(R.id.iv_cat1)
-                val ivCat2 = passedView.findViewById<ImageView>(R.id.iv_cat2)
-                val ivCat3 = passedView.findViewById<ImageView>(R.id.iv_cat3)
-                val addProdBtn = passedView.findViewById<Button>(R.id.addProductBtn)
+
+                // Make the edition UI visible
+                    addCategoriesBtn.visibility = View.VISIBLE
+                    cancelCreateListBtn.visibility = View.VISIBLE
+                    createListBtn.visibility = View.VISIBLE
+                    spinner.visibility = View.VISIBLE
+                    etProductName!!.visibility = View.VISIBLE
+                    etQuantity!!.visibility = View.VISIBLE
+                    catImg1.visibility = View.VISIBLE
+                    catImg2.visibility = View.VISIBLE
+                    catImg3.visibility = View.VISIBLE
+                    uiVisible = true
+
+                // Change some of the UI
+                    rootView.findViewById<FloatingActionButton>(R.id.backFloatingActionButton).hide()
+                    addProductBtn.setText(R.string.edit) // Add product button becomes Edit button
+
+                    if (fragmentMode.equals("viewing")) {
+                        createListBtn.setText(R.string.save_list) // Create list button becomes Save list button
+                    }
 
                 etQuantity.setText(archivedItem.quantite.toString())
                 selectedUnit = archivedItem.uniteId
-                unitsDropdown.setSelection(selectedUnit)
+                spinner.setSelection(selectedUnit)
                 etProductName.setText(archivedItem.produit)
 
                 if (archivedItem.categorieProdId1 >= 0) {
-                    ivCat1.setImageResource(listOfCategories[archivedItem.categorieProdId1].categoryIconId)
+                    catImg1.setImageResource(listOfCategories[archivedItem.categorieProdId1].categoryIconId)
                 } else {
-                    ivCat1.setImageResource(R.drawable.none_icon)
+                    catImg1.setImageResource(R.drawable.none_icon)
                 }
 
                 if (archivedItem.categorieProdId2 >= 0) {
-                    ivCat2.setImageResource(listOfCategories[archivedItem.categorieProdId2].categoryIconId)
+                    catImg2.setImageResource(listOfCategories[archivedItem.categorieProdId2].categoryIconId)
                 } else {
-                    ivCat2.setImageResource(R.drawable.none_icon)
+                    catImg2.setImageResource(R.drawable.none_icon)
                 }
 
                 if (archivedItem.categorieProdId3 >= 0) {
-                    ivCat3.setImageResource(listOfCategories[archivedItem.categorieProdId3].categoryIconId)
+                    catImg3.setImageResource(listOfCategories[archivedItem.categorieProdId3].categoryIconId)
                 } else {
-                    ivCat3.setImageResource(R.drawable.none_icon)
+                    catImg3.setImageResource(R.drawable.none_icon)
                 }
 
                 for (i in listOfCategories) {
@@ -120,20 +156,22 @@ class NewProductListRecycleAdapter(val newProducts: ArrayList<ListeCourses>, pri
                 if (archivedItem.categorieProdId3 >= 0) {
                     listOfCategories[archivedItem.categorieProdId3].isSelected = true
                 }
-
-                editItemPosition = adapterPosition
-                addProdBtn.setText(R.string.edit)
             }
 
             // Changes the value if the user checks or unchecks the item within the list
                 newProdChkBox.setOnClickListener {
                     if (newProducts[adapterPosition].achete == 1) {
                         newProducts[adapterPosition].achete = 0
-                        notifyDataSetChanged()
                     } else {
                         newProducts[adapterPosition].achete = 1
-                        notifyDataSetChanged()
                     }
+
+                    // Updates database when item checked or unchecked
+                        val listeCoursesDAO = ListeCoursesDAO(context)
+                        listeCoursesDAO.openWritable()
+                        listeCoursesDAO.update(newProducts[adapterPosition].id, newProducts[adapterPosition])
+
+                    notifyDataSetChanged()
                 }
         }
     }

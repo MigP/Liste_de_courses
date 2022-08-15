@@ -110,6 +110,7 @@ class SplashActivity : AppCompatActivity() {
                     }
 
                     var generalList = GeneralList()
+                        ?.setListId(listId)
                         ?.setListName(listsItem.listName)
                         ?.setListTag(listsItem.listTag)
                         ?.setListDate(listsItem.date)
@@ -126,6 +127,7 @@ class SplashActivity : AppCompatActivity() {
                 recyclerView.layoutManager = generalListAdapterLayoutManager
                 generalListAdapter = GeneralListAdapter(listeListes, this)
                 recyclerView.adapter = generalListAdapter
+
 
     }
 
@@ -190,6 +192,8 @@ class SplashActivity : AppCompatActivity() {
                     dialog.dismiss()
                     val createListIntent = Intent(this, MainActivity::class.java)
                     createListIntent.putExtra("targetFragment", "create")
+                    createListIntent.putExtra("fragmentMode", "listCreation")
+                    createListIntent.putExtra("listId", 0)
                     createListIntent.putExtra("newListName", listName.text.toString())
                     createListIntent.putExtra("newListTag", listTag.text.toString())
                     startActivity(createListIntent)

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.Date;
 
 public class ListeListes {
+    private int id;
     private String listName;
     private String listTag;
     private String date;
@@ -12,7 +13,8 @@ public class ListeListes {
     public ListeListes() {
     }
 
-    public ListeListes(String listName, String listTag, String date) {
+    public ListeListes(int id, String listName, String listTag, String date) {
+        this.id = id;
         this.listName = listName;
         this.listTag = listTag;
         this.date = date;
@@ -22,10 +24,20 @@ public class ListeListes {
     @Override
     public String toString() {
         return "ListeListes{" +
-                "listName='" + listName + '\'' +
+                "id='" + id + '\'' +
+                ", listName='" + listName + '\'' +
                 ", listTag='" + listTag + '\'' +
                 ", date='" + date + '\'' +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ListeListes setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public String getListName() {

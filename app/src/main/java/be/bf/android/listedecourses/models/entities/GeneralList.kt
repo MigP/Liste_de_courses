@@ -1,6 +1,7 @@
 package be.bf.android.listedecourses.models.entities
 
 class GeneralList {
+    private var listId: Int = 0
     private var listName: String? = null
     private var listTag: String? = null
     private var listDate: String? = null
@@ -9,7 +10,8 @@ class GeneralList {
 
     fun GeneralList() {}
 
-    fun GeneralList(listName: String?, listTag: String?, listItems: String?, listDate: String?, colour: String) {
+    fun GeneralList(listId: Int, listName: String?, listTag: String?, listItems: String?, listDate: String?, colour: String) {
+        this.listId = listId
         this.listName = listName
         this.listTag = listTag
         this.listItems = listItems
@@ -19,12 +21,22 @@ class GeneralList {
 
     override fun toString(): String {
         return "ListeListes{" +
-                "listName='" + listName + '\'' +
+                "listId='" + listId + '\'' +
+                ", listName='" + listName + '\'' +
                 ", listTag='" + listTag + '\'' +
                 ", listItems='" + listItems + '\'' +
                 ", listDate='" + listDate + '\'' +
                 ", colour='" + colour + '\'' +
                 '}'
+    }
+
+    fun getListId(): Int {
+        return listId
+    }
+
+    fun setListId(listId: Int): GeneralList? {
+        this.listId = listId
+        return this
     }
 
     fun getColour(): String {

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import be.bf.android.listedecourses.R
@@ -16,6 +17,7 @@ import be.bf.android.listedecourses.models.adapters.NewProductListRecycleAdapter
 import be.bf.android.listedecourses.models.entities.GeneralList
 import be.bf.android.listedecourses.models.entities.ListeCourses
 import be.bf.android.listedecourses.models.entities.ListeListes
+import be.bf.android.listedecourses.models.gestures.SwipeGesture
 import com.google.android.material.snackbar.Snackbar
 
 class FragmentShowList : Fragment() {
@@ -40,6 +42,37 @@ class FragmentShowList : Fragment() {
                 recyclerView.layoutManager = detailedListAdapterLayoutManager
                 detailedListAdapter = DetailedListAdapter(listeListes, requireContext())
                 recyclerView.adapter = detailedListAdapter
+
+            val swipeGesture = object: SwipeGesture(requireContext()) {
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    var deletedListId = listeListes[0][viewHolder.adapterPosition].getListId()
+
+                    when (direction){
+                        ItemTouchHelper.RIGHT -> {
+                            (detailedListAdapter as DetailedListAdapter).deleteItem(viewHolder.adapterPosition)
+                        }
+
+                        ItemTouchHelper.LEFT -> {
+                            (detailedListAdapter as DetailedListAdapter).deleteItem(viewHolder.adapterPosition)
+                        }
+                    }
+
+                    // Delete from liste_listes table
+                        val listeListesDAO = ListeListesDAO(requireContext())
+                        listeListesDAO.openWritable()
+
+                        listeListesDAO.delete(deletedListId)
+
+                    // Delete from liste_courses table
+                        val listeCoursesDAO = ListeCoursesDAO(requireContext())
+                        listeCoursesDAO.openWritable()
+
+                        listeCoursesDAO.deleteProductsOfListId(deletedListId)
+                }
+            }
+
+            val touchHelper = ItemTouchHelper(swipeGesture)
+            touchHelper.attachToRecyclerView(recyclerView)
 
         // Implements click listener for the filter switch
             var filterSwitch: Switch
@@ -91,6 +124,7 @@ class FragmentShowList : Fragment() {
 
                 if (filtered == false || (filtered == true && listItemCount.toString() !== checkedListItemCount.toString())) {
                     var generalList = GeneralList()
+                        ?.setListId(listId)
                         ?.setListName(listsItem.listName)
                         ?.setListTag(listsItem.listTag)
                         ?.setListDate(listsItem.date)

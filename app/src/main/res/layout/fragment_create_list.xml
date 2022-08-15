@@ -131,6 +131,7 @@
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="100dp"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TableRow
@@ -139,17 +140,19 @@
 
                 <Button
                     android:id="@+id/addProductBtn"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:layout_margin="10dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="50dp"
                     android:layout_weight="1"
                     android:text="@string/add_product" />
             </TableRow>
 
             <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2">
 
                 <Button
                     android:id="@+id/createListBtn"
@@ -157,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:text="@string/create_list" />
 
                 <Button

@@ -82,17 +82,6 @@ public class ListeListesDAO {
         return listIds;
     }
 
-   @SuppressLint("Range")
-   public int findLastId() {
-        if (this.findAll().size() == 0) {
-            return 0;
-        } else {
-            @SuppressLint("Recycle") Cursor cursor = this.database.rawQuery("SELECT * FROM liste_listes ORDER BY id DESC LIMIT 1", null);
-            cursor.moveToFirst();
-            return cursor.getInt(0);
-        }
-    }
-
     public long insert(ListeListes listeListes) {
         ContentValues cv = new ContentValues();
         cv.put("listName", listeListes.getListName());
